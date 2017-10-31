@@ -1,0 +1,226 @@
+﻿@using Microsoft.AspNetCore.Http;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] </title>
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link href="~/css/bootstrap.min.css" rel="stylesheet">
+        <!-- bootstrap theme -->
+        <link href="~/css/bootstrap-theme.css" rel="stylesheet">
+        <!--external css-->
+        <!-- font icon -->
+        <link href="~/css/elegant-icons-style.css" rel="stylesheet" />
+        <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+        <!-- Custom styles -->
+        <link href="~/css/style.css" rel="stylesheet">
+        <link href="~/css/style-responsive.css" rel="stylesheet" />
+        
+
+
+
+
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link href="~/css/bootstrap.min.css" rel="stylesheet">
+        <!-- bootstrap theme -->
+        <link href="~/css/bootstrap-theme.css" rel="stylesheet">
+        <!--external css-->
+        <!-- font icon -->
+        <link href="~/css/elegant-icons-style.css" rel="stylesheet" />
+        <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+        <!-- Custom styles -->
+        <link href="~/css/style.css" rel="stylesheet">
+        <link href="~/css/style-responsive.css" rel="stylesheet" />
+    </environment>
+</head>
+<body>
+
+    <script src="~/js/site.js"></script>
+
+    <script src="~/js/JsBarcode.all.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+   
+    @*<script src="~/js/JsBarcode.code128.min.js"></script>
+    <script src="~/js/JsBarcode.code39.min.js"></script>
+    <script src="~/js/JsBarcode.ean-upc.min.js"></script>
+    <script src="~/js/JsBarcode.itf-14.min.js"></script>
+    <script src="~/js/JsBarcode.msi.min.js"></script>
+    <script src="~/js/JsBarcode.pharmacode.min.js"></script>*@
+
+
+
+    
+
+    <section id="container" class="">
+        <!--header start-->
+        <header class="header dark-bg" style="background-color:#101010;  height:80px;">
+
+
+            <!--logo start-->
+            <a href="@Url.Action("Index", "Shop")"><img src="~/images/logo.png" style="height:60px; margin-top:10px;  margin-bottom:10px; " />     </a>
+            <!--logo end-->
+
+
+            <div class="top-nav notification-row" style="margin-top:20px;">
+                <!-- notificatoin dropdown start-->
+                <ul class="nav pull-right top-menu">
+
+                    <!-- task notificatoin start -->
+                    <!-- alert notification end-->
+                    <!-- user login dropdown start-->
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+
+                            <span class="username" STYLE="font-size: 12pt"><b>@Context.Session.GetString("Name")</b></span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu extended logout">
+
+                            <li class="eborder-top">
+                                <a href="@Url.Action("Index", "Shop")"><i class="icon_profile"></i> My Profile</a>
+                            </li>
+
+
+                            <li style="background-color:#062f4f;">
+                                <a href="@Url.Action("Logout", "Account")"><i class="icon_key_alt"></i> Log Out</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <!-- user login dropdown end -->
+                </ul>
+                <!-- notificatoin dropdown end-->
+            </div>
+        </header>
+        <!--header end-->
+
+        <!--sidebar start-->
+        <aside id="aside">
+            <div id="sidebar" class="nav-collapse " style="margin-top:20px; background-color:#062f4f;">
+                <!-- sidebar menu start-->
+                <ul class="sidebar-menu">
+
+                    <li class="">
+                        <a class="" asp-action="Index">
+                            <i class="icon_profile"></i>
+                            <span STYLE="font-size: 12pt">Profile</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a asp-controller="Shop" asp-action="AddStitchingJob">
+                            <i class="icon_document_alt"></i>
+                            <span STYLE="font-size: 12pt">Add Stitching Job</span>
+                        </a>
+                    </li>
+
+
+                    <li class="">
+                        <a asp-controller="Shop" asp-action="AddCustomer">
+                            <i class="icon_document_alt"></i>
+                            <span STYLE="font-size: 12pt">Add Customer</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a asp-controller="Shop" asp-action="AddShopOrder">
+                            <i class="icon_document_alt"></i>
+                            <span STYLE="font-size: 12pt">Add Shop Order</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a class="" asp-controller="Shop" asp-action="CustomerOrderHistory">
+                            <i class="icon_table"></i>
+                            <span STYLE="font-size: 12pt">Customer Orders</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a asp-controller="Shop" asp-action="SearchItemStatus">
+                            <i class="icon_table"></i>
+                            <span STYLE="font-size: 12pt">Check Item Status</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a asp-controller="Shop" asp-action="ReceiptGeneration">
+                            <i class="icon_table"></i>
+                            <span STYLE="font-size: 12pt">Generate Receipt</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a asp-controller="Shop" asp-action="InvoiceGeneration">
+                            <i class="icon_table"></i>
+                            <span STYLE="font-size: 12pt">Generate Invoice</span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a asp-controller="Shop" asp-action="WarehouseStatus">
+                            <i class="icon_table"></i>
+                            <span STYLE="font-size: 12pt">Warehouse Status</span>
+                        </a>
+                    </li>
+
+                  
+
+
+
+                </ul>
+                <!-- sidebar menu end-->
+            </div>
+        </aside>
+
+        <section id="main-content">
+            <section class="wrapper">
+                @RenderBody()
+            </section>
+        </section>
+    </section>
+
+
+
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/jquery.nicescroll.js"></script>
+        <script src="~/js/jquery.scrollTo.min.js"></script>
+        <script src="~/js/scripts.js"></script>
+        <script src="~/assets/jquery-knob/js/jquery.knob.js"></script>
+
+        <!-- nice scroll -->
+        <script src="~/js/jquery.scrollTo.min.js"></script>
+        <script src="~/js/scripts.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("scripts", required: false)
+
+    
+   
+</body>
+</html>

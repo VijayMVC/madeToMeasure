@@ -1,0 +1,170 @@
+﻿@using Madetomeasure.Models.Admin
+@model Madetomeasure.Models.Admin.LinkShopWarehous
+@using Madetomeasure.Data
+@{
+    ViewBag.Title = "Link Shop Warehouse";
+
+}
+@if (TempData["Message"] != null)
+{
+@if ((string)TempData["Message"] == "shoperror")
+{
+    TempData["Message"] = " ";
+    <script>
+        alert('Please select Shop');
+    </script>
+
+
+}
+@if ((string)TempData["Message"] == "warehouseerror")
+{
+    TempData["Message"] = " ";
+    <script>
+        alert('Please select Warehouse');
+    </script>
+
+
+    }
+}
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+ <!-- container section start -->
+
+    <!--main content start-->
+    <section id="main-content">
+        <section class="wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="page-header"><i class="fa fa-table"></i> Link Shop and Warehouse</h3>
+                    
+                </div>
+            </div>
+            <!-- page start-->
+            <br>
+
+            <form class="form-validate form-horizontal" id="feedback_form" method="get" asp-controller="Admin" asp-action="LinkShopware">
+
+                <div class="form-group">
+
+
+                    <label asp-for="warehousec" class="control-label col-lg-2">Warehouse Address</label><span style="color:red"></span>
+                    <div class="col-lg-10">
+                        <select asp-for="warehousec" class="form-control m-bot15">
+                            <option value=0>Select Option</option>
+                            @if (ViewData["warehousfree"] != null)
+                            {
+
+                                @foreach (var cat in (IEnumerable<BusinessEntity>)ViewData["warehousfree"])
+                                {
+
+                                    <option value="@cat.EntityCode">@cat.EntityAddress</option>
+
+                                }
+                            }
+
+
+                        </select>
+                        <span asp-validation-for="warehousec" id="businessentitycheck" class="text-danger"></span>
+
+
+
+
+
+
+                        <span id="designationcheck" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+
+
+                    <label asp-for="shopc" class="control-label col-lg-2">Shop Address</label><span style="color:red"></span>
+                    <div class="col-lg-10">
+                        <select asp-for="shopc" class="form-control m-bot15">
+                            <option value=0>Select Option</option>
+                            @if (ViewData["shopsfree"] != null)
+                            {
+
+                                @foreach (var cat in (IEnumerable<BusinessEntity>)ViewData["shopsfree"])
+                                {
+
+                                    <option value="@cat.EntityCode"> @cat.EntityAddress</option>
+
+                                }
+                            }
+
+
+                        </select>
+                        <span asp-validation-for="shopc" id="businessentitycheck" class="text-danger"></span>
+
+
+
+
+
+
+                        <span id="designationcheck" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-10">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                        <button class="btn btn-primary" type="submit">Add</button>
+                        <br /><br />
+
+                    </div>
+                </div>
+            </form>
+
+
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Associated Shops
+                        </header>
+
+                        <table class="table table-striped table-advance table-hover">
+                            <tbody>
+                                <tr>
+                                    <th> Shop Id</th>
+                                    <th>Shop Address</th>
+                                    <th> Warehouse Id</th>
+                                    <th>warehouse Address</th>
+                                    
+
+
+                                </tr>
+
+                                @if (ViewData["table"] != null)
+                                {
+
+                                    @foreach (var entry in (IEnumerable<tableshopwarehouse>)ViewData["table"])
+                                    {
+                                        <tr>
+                                            <td>Id @entry.shopid</td>
+                                            <td>@entry.shopaddress</td>
+                                            <td>Id @entry.warehouseid</td>
+                                            <td> @entry.wareaddress</td>
+                                           
+                                        </tr>
+
+                                    }
+                                }
+
+
+                              
+                              
+
+                            </tbody>
+                        </table>
+                        <br>
+                   
+
+                    </section>
+            </section>
+  </section>
+                    <!-- page end-->
+
+    <!--main content end-->
+
+ 

@@ -1,0 +1,303 @@
+﻿@model Madetomeasure.ViewModels.Shop.AddStitchingJobViewModel
+
+@{
+    Layout = "~/Views/Shared/_ShopLayout.cshtml";
+}
+
+<script>
+    $(function () {
+        $('#btn').click(function () {
+            $("#header").hide();
+            $("#aside").hide();
+            $("#print").hide();
+            $("#addanother").hide();
+
+            window.print();
+            $("#header").show();
+            $("#aside").show();
+            $("#print").show();
+            $("#addanother").show();
+        });
+    });
+</script>
+
+<section class="panel">
+    <header class="panel-heading">
+        Job Card
+    </header>
+    <div>
+        <img id="barcode3" />
+        <script>
+            var jobid= @Model.JobId.ToString();
+            JsBarcode("#barcode3",jobid, {
+			format:"CODE39",
+			displayValue:true,
+			fontSize:20
+		});</script>
+    </div>
+
+
+    <div class="panel-body">
+        @if (Model.JobTypeId == 1)
+        {
+            <label class="col-md-6">Job Name: Suit </label>
+        }
+        @if (Model.JobTypeId == 2)
+        {
+            <label class="col-md-6">Job Name: Pant </label>
+        }
+        @if (Model.JobTypeId == 3)
+        {
+            <label class="col-md-6">Job Name: Shirt </label>
+        }
+        @if (Model.JobTypeId == 4)
+        {
+            <label class="col-md-6">Job Name: Blazer </label>
+        }
+        @if (Model.JobTypeId == 5)
+        {
+            <label class="col-md-6">Job Name: Shalwar </label>
+        }
+        @if (Model.JobTypeId == 6)
+        {
+            <label class="col-md-6">Job Name: Kurta </label>
+        }
+
+        <label class="col-md-6">Expected Date: @Html.DisplayFor(model => model.ExpectedDate)</label>
+    </div>
+
+    <div class="panel-body">
+        <label class="col-md-6"> Customer ID: @Html.DisplayFor(model => model.CustomerId)</label>
+        @if (Model.FabricfromCustomer == 0)
+            {
+            <label class="col-md-6"> Fabric from Customer: No</label>
+        }
+        @if (Model.FabricfromCustomer == 1)
+            {
+            <label class="col-md-6"> Fabric from Customer: Yes</label>
+        }
+    </div>
+    <div class="panel-body">
+        @if (Model.JobTypeId == 1)
+            {
+            <label class="col-md-6">Bicep: @Html.DisplayFor(model => model.SuitMeasurements.Bicep)</label>
+                <label class="col-md-6">Chest: @Html.DisplayFor(model => model.SuitMeasurements.Chest)</label>
+
+                <label class="col-md-6">Collar: @Html.DisplayFor(model => model.SuitMeasurements.Collar)</label>
+                <label class="col-md-6">Crotch: @Html.DisplayFor(model => model.SuitMeasurements.Crotch)</label>
+
+                <label class="col-md-6">FullBack: @Html.DisplayFor(model => model.SuitMeasurements.FullBack)</label>
+                <label class="col-md-6">HalfBack: @Html.DisplayFor(model => model.SuitMeasurements.HalfBack)</label>
+
+                <label class="col-md-6">Hip: @Html.DisplayFor(model => model.SuitMeasurements.Hip)</label>
+                <label class="col-md-6">Inseam: @Html.DisplayFor(model => model.SuitMeasurements.Inseam)</label>
+
+                <label class="col-md-6">Knee: @Html.DisplayFor(model => model.SuitMeasurements.Knee)</label>
+                <label class="col-md-6">Length: @Html.DisplayFor(model => model.SuitMeasurements.Length)</label>
+
+                <label class="col-md-6">OutSeam: @Html.DisplayFor(model => model.SuitMeasurements.OutSeam)</label>
+                <label class="col-md-6">Shoulder: @Html.DisplayFor(model => model.SuitMeasurements.Shoulder)</label>
+
+                <label class="col-md-6">Sleeve: @Html.DisplayFor(model => model.SuitMeasurements.Sleeve)</label>
+                <label class="col-md-6">Thigh: @Html.DisplayFor(model => model.SuitMeasurements.Thigh)</label>
+
+                <label class="col-md-6">Waist: @Html.DisplayFor(model => model.SuitMeasurements.Waist)</label>
+                <label class="col-md-6">Wrist: @Html.DisplayFor(model => model.SuitMeasurements.Wrist)</label>
+
+                <label class="col-md-6">Other Details: @Html.DisplayFor(model => model.SuitMeasurements.OtherDetails)</label>
+
+
+
+        }
+
+        @if (Model.JobTypeId == 2)
+        {
+
+            <label class="col-md-6">Crotch: @Html.DisplayFor(model => model.PantMeasurements.Crotch)</label>
+
+                <label class="col-md-6">Hip: @Html.DisplayFor(model => model.PantMeasurements.Hip)</label>
+                <label class="col-md-6">Inseam: @Html.DisplayFor(model => model.PantMeasurements.Inseam)</label>
+
+                <label class="col-md-6">Knee: @Html.DisplayFor(model => model.PantMeasurements.Knee)</label>
+
+                <label class="col-md-6">OutSeam: @Html.DisplayFor(model => model.PantMeasurements.OutSeam)</label>
+
+                <label class="col-md-6">Thigh: @Html.DisplayFor(model => model.PantMeasurements.Thigh)</label>
+
+                <label class="col-md-6">Waist: @Html.DisplayFor(model => model.PantMeasurements.Waist)</label>
+
+
+                <label class="col-md-6">Other Details: @Html.DisplayFor(model => model.PantMeasurements.OtherDetails)</label>
+
+
+
+        }
+
+        @if (Model.JobTypeId == 3)
+            {
+            <label class="col-md-6">Bicep: @Html.DisplayFor(model => model.ShirtMeasurements.Bicep)</label>
+                <label class="col-md-6">Chest: @Html.DisplayFor(model => model.ShirtMeasurements.Chest)</label>
+
+                <label class="col-md-6">Collar: @Html.DisplayFor(model => model.ShirtMeasurements.Collar)</label>
+                <label class="col-md-6">Length: @Html.DisplayFor(model => model.ShirtMeasurements.Length)</label>
+
+
+                <label class="col-md-6">FullBack: @Html.DisplayFor(model => model.ShirtMeasurements.FullBack)</label>
+                <label class="col-md-6">HalfBack: @Html.DisplayFor(model => model.ShirtMeasurements.HalfBack)</label>
+
+
+
+
+                <label class="col-md-6">Shoulder: @Html.DisplayFor(model => model.ShirtMeasurements.Shoulder)</label>
+
+                <label class="col-md-6">Sleeve: @Html.DisplayFor(model => model.ShirtMeasurements.Sleeve)</label>
+
+
+                <label class="col-md-6">Waist: @Html.DisplayFor(model => model.ShirtMeasurements.Waist)</label>
+                <label class="col-md-6">Wrist: @Html.DisplayFor(model => model.ShirtMeasurements.Wrist)</label>
+
+                <label class="col-md-6">Other Details: @Html.DisplayFor(model => model.ShirtMeasurements.OtherDetails)</label>
+
+
+
+        }
+
+        @if (Model.JobTypeId == 6)
+            {
+            <label class="col-md-6">Daman: @Html.DisplayFor(model => model.KurtaMeasurements.Daman)</label>
+                <label class="col-md-6">Chest: @Html.DisplayFor(model => model.KurtaMeasurements.Chest)</label>
+
+                <label class="col-md-6">Collar: @Html.DisplayFor(model => model.KurtaMeasurements.Collar)</label>
+                <label class="col-md-6">Length: @Html.DisplayFor(model => model.KurtaMeasurements.Length)</label>
+
+
+                <label class="col-md-6">Shoulder: @Html.DisplayFor(model => model.KurtaMeasurements.Shoulder)</label>
+
+                <label class="col-md-6">Sleeve: @Html.DisplayFor(model => model.KurtaMeasurements.Sleeve)</label>
+
+                <label class="col-md-6">Other Details: @Html.DisplayFor(model => model.KurtaMeasurements.OtherDetails)</label>
+
+
+        }
+
+        @if (Model.JobTypeId == 5)
+        {
+
+            <label class="col-md-6">Length: @Html.DisplayFor(model => model.ShalwarMeasurements.Length)</label>
+
+
+                <label class="col-md-6">Shoulder: @Html.DisplayFor(model => model.ShalwarMeasurements.Bottom)</label>
+
+                <label class="col-md-6">Waist: @Html.DisplayFor(model => model.ShalwarMeasurements.Waist)</label>
+
+                <label class="col-md-6">Other Details: @Html.DisplayFor(model => model.ShalwarMeasurements.OtherDetails)</label>
+
+
+        }
+
+
+
+        @if (Model.JobTypeId == 4)
+            {
+            <label class="col-md-6">Bicep: @Html.DisplayFor(model => model.BlazerMeasurements.Bicep)</label>
+                <label class="col-md-6">Chest: @Html.DisplayFor(model => model.BlazerMeasurements.Chest)</label>
+
+
+                <label class="col-md-6">Length: @Html.DisplayFor(model => model.BlazerMeasurements.Length)</label>
+
+
+
+
+
+                <label class="col-md-6">Shoulder: @Html.DisplayFor(model => model.BlazerMeasurements.Shoulder)</label>
+
+                <label class="col-md-6">Sleeve: @Html.DisplayFor(model => model.BlazerMeasurements.Sleeve)</label>
+
+
+
+                <label class="col-md-6">Wrist: @Html.DisplayFor(model => model.BlazerMeasurements.Wrist)</label>
+
+                <label class="col-md-6">Other Details: @Html.DisplayFor(model => model.BlazerMeasurements.OtherDetails)</label>
+
+
+
+        }
+
+    </div>
+
+    <div class="panel-body">
+        @if (Model.FabricfromCustomer == 0 && Model.JobTypeId == 1)
+        {
+            <label class="col-md-6">Fabric Item Code: @Html.DisplayFor(model => model.SuitItemCode1)</label>
+                    <label class="col-md-6">Quantity: @Html.DisplayFor(model => model.SuitQuantity1)</label>
+
+                    <label class="col-md-6">Button Item Code: @Html.DisplayFor(model => model.SuitItemCode2)</label>
+                    <label class="col-md-6">Quantity: @Html.DisplayFor(model => model.SuitQuantity2)</label>
+
+                    <label class="col-md-6">Zip Item Code: @Html.DisplayFor(model => model.SuitItemCode3)</label>
+                    <label class="col-md-6">Quantity: @Html.DisplayFor(model => model.SuitQuantity3)</label>
+
+        }
+
+        @if (Model.FabricfromCustomer == 0 && Model.JobTypeId == 2)
+        {
+            <label class="col-md-6">Fabric Item Code: @Html.DisplayFor(model => model.PantItemCode1)</label>
+            <label class="col-md-6">Quantity: @Html.DisplayFor(model => model.PantQuantity1)</label>
+
+                    <label class="col-md-6">Zip Item Code: @Html.DisplayFor(model => model.PantItemCode2)</label>
+                    <label class="col-md-6">Quantity: @Html.DisplayFor(model => model.PantQuantity2)</label>
+
+
+
+        }
+
+        @if (Model.FabricfromCustomer == 0 && Model.JobTypeId == 3)
+        {
+            <label class="col-md-6">Fabric Item Code: @Html.DisplayFor(model => model.ShirtItemCode1)</label>
+            <label class="col-md-6">Quantity: @Html.DisplayFor(model => model.ShirtQuantity1)</label>
+
+            <label class="col-md-6">Button Item Code: @Html.DisplayFor(model => model.ShirtItemCode2)</label>
+                    <label class="col-md-6">Quantity: @Html.DisplayFor(model => model.ShirtQuantity2)</label>
+
+
+
+        }
+
+        @if (Model.FabricfromCustomer == 0 && Model.JobTypeId == 6)
+        {
+            <label class="col-md-6">Fabric Item Code: @Html.DisplayFor(model => model.KurtaItemCode1)</label>
+            <label class="col-md-6">Quantity: @Html.DisplayFor(model => model.KurtaQuantity1)</label>
+
+            <label class="col-md-6">Button Item Code: @Html.DisplayFor(model => model.KurtaItemCode2)</label>
+            <label class="col-md-6">Quantity: @Html.DisplayFor(model => model.KurtaQuantity2)</label>
+
+
+
+        }
+
+        @if (Model.FabricfromCustomer == 0 && Model.JobTypeId == 5)
+        {
+            <label class="col-md-6">Fabric Item Code: @Html.DisplayFor(model => model.ShalwarItemCode1)</label>
+            <label class="col-md-6">Quantity: @Html.DisplayFor(model => model.ShalwarQuantity1)</label>
+
+        }
+
+        @if (Model.FabricfromCustomer == 0 && Model.JobTypeId == 4)
+        {
+            <label class="col-md-6">Fabric Item Code: @Html.DisplayFor(model => model.BlazerItemCode1)</label>
+            <label class="col-md-6">Quantity: @Html.DisplayFor(model => model.BlazerQuantity1)</label>
+
+            <label class="col-md-6">Button Item Code: @Html.DisplayFor(model => model.BlazerItemCode2)</label>
+            <label class="col-md-6">Quantity: @Html.DisplayFor(model => model.BlazerQuantity2)</label>
+
+        }
+    </div>
+
+    <div class="col-md-4" id="print">
+        <a class="btn btn-default" id="btn">Print</a>
+    </div>
+    <form asp-action="AddAnotherJob" id="myform2" class="form-horizontal" role="form">
+        <button type="submit" id="addanother" class="btn btn-default">Add Another Job</button>
+    </form>
+
+</section>

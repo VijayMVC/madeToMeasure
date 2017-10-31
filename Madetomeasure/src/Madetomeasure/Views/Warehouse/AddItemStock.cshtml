@@ -1,0 +1,264 @@
+﻿@model Madetomeasure.ViewModels.Warehouse.AddItemStockViewModel
+@using Madetomeasure.Data
+
+@{
+    ViewBag.Title = "Add Item Stock";
+    Layout = "~/Views/Shared/_WarehouseLayout.cshtml";
+
+}
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#categorySelect").on('change',function () {
+
+            var valueSelected = this.value;
+
+            //alert(valueSelected);
+
+                var url1 = "http://localhost:63691/Warehouse/GetSubCategories?CategoryId=" + valueSelected;
+
+            $.ajax({
+                url: url1,
+                dataType: "json",
+                type: "GET",
+                contentType: 'application/json; charset=utf-8',
+                async: true,
+                processData: false,
+                cache: false,
+                success: function (data) {
+
+                    //alert('You selected: ' + data.value + ', ' + data.Name);
+                    FillSubCategories(data);
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            });
+            
+
+
+        });
+    });
+
+
+
+    function FillSubCategories(jsonRes) {
+        //alert('success' + jsonRes[0].subcategoryName);
+
+        var html=""; 
+
+
+
+        for (i = 0; i < jsonRes.length; i++) {
+            html += "<option value=" + jsonRes[i].subcategoryId + ">" + jsonRes[i].subcategoryName + "</option>";
+            //alert(html);
+
+        }
+
+        document.getElementById("subcategorySelect").innerHTML = html;
+
+
+    }
+
+
+
+
+</script>
+
+<!-- container section start -->
+<section id="container" class="">
+   
+  
+
+    <section id="main-content">
+        <section class="wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="page-header"><i class="fa fa-files-o"></i> Add Item Stock</h3>
+
+                </div>
+            </div>
+            <!-- Form validations -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            <b>Add Item Stock</b>
+                        </header>
+                        <div class="panel-body">
+                            <div class="form">
+                                <form method="post" asp-controller="Warehouse" asp-action="AddItemStocks" role="form" enctype="multipart/form-data" class="form-validate form-horizontal" id="feedback_form"  autocomplete="on">
+                                    <div class="form-group">
+                                        <label asp-for="categoryName" class="control-label col-lg-2"><b>Category name: </b><span style="color:red">*</span></label>
+                                        <div class="col-lg-4">
+                                            <select asp-for="categoryName" id="categorySelect" class="form-control m-bot15" >
+                                                <option value="0">Select category</option>
+
+
+                                               @if (ViewData["Categories"] != null)
+                                               {
+
+                                                @foreach (var cat in (IEnumerable<Category>)ViewData["Categories"])
+                                                {
+
+                                                    <option value="@cat.CategoryId">@cat.CategoryName</option>
+
+                                                }
+                                               }
+
+
+                                            </select>
+
+                                            <span asp-validation-for="categoryName" class="text-danger" />
+                                        </div>
+                                       
+
+                                        <label asp-for="subCategoryName" class="control-label col-lg-2"><b>Sub-Category name: </b><span style="color:red">*</span></label>
+                                        <div class="col-lg-4">
+
+                                            <select asp-for="subCategoryName" id="subcategorySelect" class="form-control m-bot15" >
+
+
+                                            </select>
+
+                                            <span asp-validation-for="subCategoryName" class="text-danger" />
+
+
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group ">
+                                        <label asp-for="brand" class="control-label col-lg-2"><b>Brand: </b><span style="color:red">*</span></label>
+                                        <div class="col-lg-4">
+                                            <input asp-for="brand" class="form-control" id="brand" minlength="4" type="text"  />
+                                            <span asp-validation-for="brand" class="text-danger" />
+
+                                         </div>
+
+
+                                        <label asp-for="vendorName" class="control-label col-lg-2"><b>Vendor name: </b><span style="color:red">*</span></label>
+                                        <div class="col-lg-4">
+                                            <input asp-for="vendorName" class="form-control" id="vendor" minlength="4" type="text"  />
+                                            <span asp-validation-for="vendorName" class="text-danger" />
+
+                                         </div>
+                                    </div>
+
+
+                                    <div class="form-group ">
+                                        <label asp-for="color" class="control-label col-lg-2"><b>Color: </b><span style="color:red">*</span></label>
+                                        <div class="col-lg-4">
+                                            <input asp-for="color" class="form-control" id="color" type="text" minlength="3"  />
+                                            <span asp-validation-for="color" class="text-danger" />
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group ">
+                                        <label asp-for="costPrice" class="control-label col-lg-2"><b>Cost Price: </b><span style="color:red">*</span></label>
+                                        <div class="col-lg-4">
+                                            <input asp-for="costPrice" class="form-control" id="cost" type="number"  />
+                                            <span asp-validation-for="costPrice" class="text-danger" />
+
+                                        </div>
+
+                                        <label asp-for="salePrice" class="control-label col-lg-2"><b>Profit percentage(per unit): </b><span style="color:red">*</span></label>
+                                        <div class="col-lg-4">
+                                            <input asp-for="salePrice" class="form-control" id="sale" type="number"  />
+                                            <span asp-validation-for="salePrice" class="text-danger" />
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group ">
+                                        <label asp-for="unitOfMeasure" class="control-label col-lg-2"><b>Unit of measure: </b><span style="color:red">*</span></label>
+                                        <div class="col-lg-4">
+                                            <select asp-for="unitOfMeasure"  class="form-control m-bot15">
+                                                <option>Meters</option>
+
+                                                <option>Units</option>
+                                            </select>
+                                            <span asp-validation-for="unitOfMeasure" class="text-danger" />
+
+                                        </div>
+
+
+
+                                        <label asp-for="quantity" class="control-label col-lg-2"><b>Quantity: </b><span style="color:red">*</span></label>
+                                        <div class="col-lg-4">
+                                            <input asp-for="quantity" class="form-control" id="quan" type="number"  />
+                                            <span asp-validation-for="quantity" class="text-danger" />
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-lg-5">
+                                        </div>
+
+
+                                        <div class="col-lg-4">
+                                            <button class="btn btn-primary btn-lg" style="width:150px" type="submit">Add</button>
+
+                                        </div>
+                                        <div class="col-lg-3">
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <div class="row">
+
+                                        <div class="col-sm-8">
+
+                                            @{
+                                                if (TempData["ItemMsg"] != null && TempData["ItemMsg"].ToString() == "success")
+                                                {
+
+                                                    <div class="alert alert-success fade in" style="font-size:medium">
+
+                                                        <strong>New Item Added successfully!</strong>
+                                                    </div>
+
+                                                }
+
+                                            }
+
+
+
+
+                                        </div>
+
+
+                                    </div>
+
+                                </form>
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="row">
+
+            </div>
+            <!-- page end-->
+        </section>
+    </section>
+
+    <!-- container section end -->
+
+
+</section>
+
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

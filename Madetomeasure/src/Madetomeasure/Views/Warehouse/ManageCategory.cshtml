@@ -1,0 +1,232 @@
+﻿@model IEnumerable<Madetomeasure.Data.Category>
+    @{
+        ViewBag.Title = "Categories";
+            Layout = "~/Views/Shared/_WarehouseLayout.cshtml";
+
+    }
+
+
+
+    <section id="container" class="">
+
+
+
+        <section id="main-content">
+            <section class="wrapper">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3 class="page-header"><i class="fa fa-files-o"></i><b> Manage Categories</b></h3>
+
+                    </div>
+                </div>
+                <!-- Form validations -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <section class="panel">
+                            <header class="panel-heading">
+                                <b> Add new Category </b>
+                            </header>
+                            <div class="panel-body">
+                                <div class="form">
+                                    <form class="form-validate form-horizontal" id="feedback_form" method="post" asp-controller="Warehouse" asp-action="AddCategory" role="form">
+
+                                        <div class="col-lg-2">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-2"><b>Category name: </b><span style="color:red">*</span></label>
+                                            <div class="col-lg-4">
+                                                <input class="form-control " name="categoryName" minlength="4" type="text" required />
+                                                <span class="text-danger" />
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-lg-5">
+                                            </div>
+
+
+                                            <div class="col-lg-4">
+                                                <button class="btn btn-primary btn-lg" style="width:120px" type="submit">Add</button>
+
+                                            </div>
+                                            <div class="col-lg-3">
+                                            </div>
+
+
+                                        </div>
+
+
+                                        <div class="row">
+
+                                            <div class="col-sm-8">
+
+                                                @{
+                                                    if (TempData["CatConfirmation"] != null && TempData["CatConfirmation"].ToString() == "success")
+                                                    {
+
+                                                        <div class="alert alert-success fade in" style="font-size:medium">
+
+                                                            <strong>New Category Added successfully</strong>
+                                                        </div>
+
+                                                        TempData["CatConfirmation"] = "";
+
+                                                    }
+                                                    else if (TempData["CatConfirmation"] != null && TempData["CatConfirmation"].ToString() == "failure")
+                                                    {
+                                                        <div class="alert alert-danger fade in" style="font-size:medium">
+
+                                                            <strong>Category already exists</strong>
+                                                        </div>
+
+                                                        TempData["CatConfirmation"] = "";
+                                                    }
+
+
+
+                                                }
+
+
+
+
+                                            </div>
+
+
+                                        </div>
+
+
+
+
+                                    </form>
+                                </div>
+
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="row">
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <section class="panel">
+                            <header class="panel-heading">
+                                <b>Add New SubCategory</b>
+                            </header>
+
+                            <div class="panel-body">
+                                <div class="form">
+                                    <form class="form-validate form-horizontal" id="feedback_form" method="post" asp-controller="Warehouse" asp-action="AddSubCategory" role="form">
+
+
+                                        <div class="form-group ">
+                                            <label class="control-label col-lg-2"><b>Select Category: </b><span style="color:red">*</span></label>
+                                            <div class="col-lg-4">
+                                                <select class="form-control m-bot15" name="categoryId">
+                                                   
+
+                                                   @foreach (var cat in Model)
+                                                   {
+
+                                                    <option value="@cat.CategoryId">@cat.CategoryName</option>
+
+                                                   }
+
+
+                                                </select>
+                                                <span class="text-danger" />
+
+                                            </div>
+
+
+
+                                            <label class="control-label col-lg-2"><b>Sub-Category name: </b><span style="color:red">*</span></label>
+                                            <div class="col-lg-4">
+                                                <input class="form-control" id="quan" type="text" name="subcategoryName" required />
+                                                <span class="text-danger" />
+
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-lg-5">
+                                            </div>
+
+
+                                            <div class="col-lg-4">
+                                                <button class="btn btn-primary btn-lg" style="width:120px" type="submit">Add</button>
+
+                                            </div>
+                                            <div class="col-lg-3">
+                                            </div>
+
+
+                                        </div>
+
+
+                                        <div class="row">
+
+                                            <div class="col-sm-8">
+
+                                                @{
+                                                    if (TempData["SubConfirmation"]!= null && TempData["SubConfirmation"].ToString() == "success")
+                                                    {
+
+                                                        <div class="alert alert-success fade in" style="font-size:medium">
+
+                                                            <strong>New SubCategory Added successfully</strong>
+                                                        </div>
+                                                        TempData["SubConfirmation"] = "";
+
+                                                    }
+
+                                                    else if (TempData["SubConfirmation"] != null && TempData["SubConfirmation"].ToString() == "failure")
+                                                    {
+                                                        <div class="alert alert-danger fade in" style="font-size:medium">
+
+                                                            <strong>SubCategory already exists</strong>
+                                                        </div>
+
+                                                        TempData["SubConfirmation"] = "";
+                                                    }
+
+
+                                                }
+
+
+
+
+                                            </div>
+
+
+                                        </div>
+
+
+                                    </form>
+                                </div>
+                            </div>
+
+
+                        </section>
+                    </div>
+                </div>
+
+
+                <!-- page end-->
+            </section>
+
+
+        </section>
+
+        <!-- container section end -->
+
+
+    </section>
+

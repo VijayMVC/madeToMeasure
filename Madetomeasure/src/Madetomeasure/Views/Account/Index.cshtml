@@ -1,0 +1,55 @@
+﻿@model Madetomeasure.ViewModels.Account.LoginViewModel
+@{
+    ViewData["Title"] = "Log In";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+
+}
+
+
+
+    <!-- container section start -->
+    <section id="container">
+       
+        <div class="container">
+
+                <form asp-controller="Account" asp-action="Login" class="login-form" method="post" autocomplete="on" role="form">
+
+                    <div class="login-wrap">
+                        <p class="login-img"><i class="icon_lock_alt"></i></p>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="icon_profile"></i></span>
+                            <input asp-for="Email" type="text" class="form-control" placeholder="Username           صارف کانام" autofocus>
+
+                        </div>
+                        <span asp-validation-for="Email" id="emailCheckSpan" class="text-danger"></span>
+                        <br />
+                        
+
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="icon_key_alt"></i></span>
+                            <input asp-for="Password"  type="password" class="form-control" placeholder="Password           پاس ورڈ">
+
+                        </div>
+                        <span asp-validation-for="Password" id="passCheckSpan" class="text-danger"></span>
+
+                        <br />
+
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">Login&nbsp;&nbsp;&nbsp;&nbsp; لاگ ان</button>
+                    </div>
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                </form>
+
+
+        </div>
+
+
+
+        <!--main content start-->
+        <!--main content end-->
+    </section>
+    <!-- container section end -->
+   
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

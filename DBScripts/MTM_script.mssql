@@ -1,0 +1,254 @@
+CREATE TABLE [BusinessEntityType] (
+ [Id] INT IDENTITY(1,1) NOT NULL ,
+ [Entity Name] nvarchar(max) NOT NULL ,
+  Primary key (Id)
+);
+
+CREATE TABLE [DepartmentType] (
+ [Id] INT IDENTITY(1,1) NOT NULL ,
+ [DepartmentName] nvarchar(max) NOT NULL ,
+  Primary key (Id)
+);
+
+
+CREATE TABLE [BusinessEntity] (
+ [EntityCode] INT IDENTITY(1,1) NOT NULL ,
+ [EntityType] int references BusinessEntityType(Id) not null,
+  Primary key (EntityCode)
+);
+
+CREATE TABLE [Shop] (
+ [ShopCode] int references BusinessEntity(EntityCode) not null,
+ [AssociatedWarehouseCode] int references BusinessEntity(EntityCode) not null,
+  Primary key (ShopCode,AssociatedWarehouseCode)
+);
+
+CREATE TABLE [Warehouse] (
+ [WarehouseCode] int references BusinessEntity(EntityCode) not null,
+ [AssociatedStitchingUnitCode] int references BusinessEntity(EntityCode) not null,
+  Primary key (WarehouseCode,AssociatedStitchingUnitCode)
+);
+
+CREATE TABLE [StitchingUnitEmployee](
+ [Id] INT IDENTITY(1,1) NOT NULL ,
+ [Name] NVARCHAR(max) NOT NULL,
+ [WarehouseId] int references BusinessEntity(EntityCode) not null,
+ [DepartmentId] int references DepartmentType(Id) not null,
+ Primary KEY(Id)
+);
+
+
+CREATE TABLE [Users] (
+    [Id] INT IDENTITY(1,1) NOT NULL ,
+	[UserId] nvarchar(max) NOT NULL ,
+	[Password] nvarchar(max) NOT NULL ,
+	[UserType] INT NOT NULL ,
+    [Name] nvarchar(max) NOT NULL,
+	[JoiningDate] DATE NOT NULL,
+	[WorksAt] int references BusinessEntity(EntityCode) NULL,
+   Primary key (Id)
+);
+GO
+
+CREATE TABLE [StitchingUnitDepartmentHead](
+ [Id] int references Users(Id),
+ [AssociatedDepartmentId] INT REFERENCES DepartmentType(Id) 
+ PRIMARY KEY(Id,AssociatedDepartmentId)
+);
+
+CREATE TABLE [Category](
+[CategoryId] INT IDENTITY(1,1) NOT NULL ,
+[CategoryName] NVARCHAR(max) NOT NULL
+PRIMARY KEY(CategoryId)
+);
+
+CREATE TABLE [SubCategory](
+[SubCategoryId] INT IDENTITY(1,1) NOT NULL ,
+[CategoryId] INT REFERENCES Category(CategoryId) NOT NULL,
+[SubCategoryName] NVARCHAR(max) NOT NULL
+PRIMARY KEY(SubCategoryId)
+);
+
+
+CREATE TABLE [Item](
+[ItemCode] INT NOT NULL ,
+[WarehouseCode] INT REFERENCES dbo.BusinessEntity(EntityCode),
+[CategoryId] INT REFERENCES Category(CategoryId) NOT NULL,
+[SubCategoryId] INT REFERENCES SubCategory(SubCategoryId) NOT NULL,
+[BrandName] NVARCHAR(max) NOT NULL,
+[VendorName] NVARCHAR(max) NOT NULL,
+[UnitofMeasure] VARCHAR(10) NOT NULL,
+[Quantity] INT NOT NULL,
+[UnitCostPrice] FLOAT NOT NULL,
+[PercentageProfit] FLOAT NOT NULL,
+PRIMARY KEY(ItemCode)
+);
+
+CREATE TABLE [JobType](
+[Id] INT IDENTITY(1,1) NOT NULL,
+[JobName] NVARCHAR(max) NOT NULL
+PRIMARY KEY(Id)
+);
+
+CREATE TABLE [StitchingJob](
+[JobId] INT NOT NULL,
+[JobTypeId] INT REFERENCES JobType(Id),
+[CustomerId] INT REFERENCES Users(Id),
+[ShopCode] INT REFERENCES BusinessEntity(EntityCode),
+[WarehouseStatus] INT NOT NULL,
+[CurrentStatus] INT NULL,
+[FabricfromCustomer] INT NOT NULL,
+[ExpectedDate] DATE NULL,
+[Quantity] INT NOT NULL,
+PRIMARY KEY(JobId)
+);
+
+
+CREATE TABLE [StitchingJobDetails](
+[JobId] INT NOT NULL,
+[ItemCode] INT REFERENCES Item(ItemCode),
+PRIMARY KEY(JobId,ItemCode)
+);
+
+CREATE TABLE [ShopOrder](
+[Id] INT NOT NULL,
+[ShopCode] INT REFERENCES dbo.BusinessEntity(EntityCode) NOT NULL,
+[ItemCode] INT REFERENCES dbo.Item(ItemCode),
+[Quantity] INT NOT NULL,
+[WarehouseStatus] INT NULL,
+PRIMARY KEY(Id)
+);
+
+CREATE TABLE [Invoice](
+[InvoiceId] INT NOT NULL,
+[ShopCode] INT REFERENCES BusinessEntity(EntityCode) NOT NULL,
+[SalesPersonId] INT REFERENCES Users(Id) NOT NULL,
+[Date] DATE NOT NULL,
+[TotalAmount] INT NOT NULL,
+[AdvanceReceived] INT NOT NULL
+PRIMARY KEY(InvoiceId)
+);
+
+CREATE TABLE [InvoiceDetails](
+[InvoiceId] INT  REFERENCES Invoice(InvoiceId)NOT NULL,
+[StitchingJobId] INT REFERENCES StitchingJob(JobId) NOT NULL,
+[Price] INT NOT NULL,
+PRIMARY KEY(InvoiceId,StitchingJobId)
+);
+
+CREATE TABLE [Receipt](
+[ReceiptID] INT NOT NULL,
+[InvoiceId] INT REFERENCES Invoice(InvoiceId) NOT NULL,
+[Amount] INT NOT NULL,
+[Date] DATE NOT NULL,
+PRIMARY KEY(ReceiptID)
+);
+
+CREATE TABLE OrderfromVendor(
+[Id] INT IDENTITY(1,1) NOT NULL ,
+[Status] INT NOT NULL,
+[WarehouseManager] INT REFERENCES Users(Id) NOT NULL,
+[CategoryId] INT REFERENCES Category(CategoryId) NOT NULL,
+[SubCategoryId] INT REFERENCES SubCategory(SubCategoryId) NOT NULL,
+[BrandName] NVARCHAR(max) NOT NULL,
+[VendorName] NVARCHAR(max) NOT NULL,
+[UnitofMeasure] VARCHAR(10) NOT NULL,
+[Quantity] INT NOT NULL,
+[Color] NVARCHAR(max) NULL,
+PRIMARY KEY(Id)
+);
+
+
+CREATE TABLE [ProductionActivity](
+[Id] INT IDENTITY(1,1) NOT NULL,
+[StitchingJobId] INT REFERENCES dbo.StitchingJob(JobId) NOT NULL,
+[StitchingUnitEmployeeId] INT REFERENCES StitchingUnitEmployee(Id) NOT NULL,
+[TimeStamp] DATETIME NOT NULL,
+[ProgressStatus] INT NOT NULL,
+PRIMARY KEY(id) 
+);
+
+CREATE TABLE [KurtaMeasurements](
+[StitchingJobId] INT REFERENCES StitchingJob(JobId) NOT NULL,
+[Length] FLOAT NOT NULL,
+[Chest] FLOAT NOT NULL,
+[Shoulder] FLOAT NOT NULL,
+[Sleeve] FLOAT NOT NULL,
+[Collar] FLOAT NOT NULL,
+[Daman] FLOAT NOT NULL,
+[Other_Details] NVARCHAR(max) NOT NULL,
+PRIMARY KEY(StitchingJobId)
+);
+
+CREATE TABLE [ShalwarMeasurements](
+[StitchingJobId] INT REFERENCES StitchingJob(JobId) NOT NULL,
+[Length] FLOAT NOT NULL,
+[Waist] FLOAT NOT NULL,
+[Bottom] FLOAT NOT NULL,
+[Other_Details] NVARCHAR(max) NOT NULL,
+PRIMARY KEY(StitchingJobId)
+);
+
+CREATE TABLE [BlazerMeasurements](
+[StitchingJobId] INT REFERENCES StitchingJob(JobId) NOT NULL,
+[Length] FLOAT NOT NULL,
+[Chest] FLOAT NOT NULL,
+[Shoulder] FLOAT NOT NULL,
+[Sleeve] FLOAT NOT NULL,
+[Bicep] FLOAT NOT NULL,
+[Wrist] FLOAT NOT NULL,
+[Other_Details] NVARCHAR(max) NOT NULL,
+PRIMARY KEY(StitchingJobId)
+);
+
+CREATE TABLE [SuitMeasurements](
+[StitchingJobId] INT REFERENCES StitchingJob(JobId) NOT NULL,
+[Length] FLOAT NOT NULL,
+[Chest] FLOAT NOT NULL,
+[Shoulder] FLOAT NOT NULL,
+[Sleeve] FLOAT NOT NULL,
+[Collar] FLOAT NOT NULL,
+[HalfBack] FLOAT NOT NULL,
+[FullBack] FLOAT NOT NULL,
+[Bicep] FLOAT NOT NULL,
+[Wrist] FLOAT NOT NULL,
+[Waist] FLOAT NOT NULL,
+[Hip] FLOAT NOT NULL,
+[Thigh] FLOAT NOT NULL,
+[OutSeam] FLOAT NOT NULL,
+[Inseam] FLOAT NOT NULL,
+[Crotch] FLOAT NOT NULL,
+[Knee] FLOAT NOT NULL,
+[Other_Details] NVARCHAR(max) NOT NULL,
+PRIMARY KEY(StitchingJobId)
+);
+
+CREATE TABLE [PantMeasurements](
+[StitchingJobId] INT REFERENCES StitchingJob(JobId) NOT NULL,
+[Waist] FLOAT NOT NULL,
+[Hip] FLOAT NOT NULL,
+[Thigh] FLOAT NOT NULL,
+[OutSeam] FLOAT NOT NULL,
+[Inseam] FLOAT NOT NULL,
+[Crotch] FLOAT NOT NULL,
+[Knee] FLOAT NOT NULL,
+[Other_Details] NVARCHAR(max) NOT NULL,
+PRIMARY KEY(StitchingJobId)
+);
+
+CREATE TABLE [ShirtMeasurements](
+[StitchingJobId] INT REFERENCES StitchingJob(JobId) NOT NULL,
+[Length] FLOAT NOT NULL,
+[Chest] FLOAT NOT NULL,
+[Shoulder] FLOAT NOT NULL,
+[Sleeve] FLOAT NOT NULL,
+[Collar] FLOAT NOT NULL,
+[HalfBack] FLOAT NOT NULL,
+[FullBack] FLOAT NOT NULL,
+[Bicep] FLOAT NOT NULL,
+[Wrist] FLOAT NOT NULL,
+[Waist] FLOAT NOT NULL,
+[Other_Details] NVARCHAR(max) NOT NULL,
+PRIMARY KEY(StitchingJobId)
+);
+

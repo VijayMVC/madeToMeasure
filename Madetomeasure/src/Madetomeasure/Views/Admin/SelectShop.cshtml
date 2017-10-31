@@ -1,0 +1,174 @@
+﻿@using Madetomeasure.Models.Admin
+@using Madetomeasure.Data
+@*@model Madetomeasure.Models.Admin.SelectShopOrder*@
+@{
+    ViewBag.Title = "Select Shop";
+}
+@if (TempData["noshopse"] != null)
+{
+    @if ((string)TempData["noshopse"] == "true")
+    {
+        TempData["noshopse"] = " ";
+        <script>
+        alert('Please select BusinessEntity');
+        </script>
+
+    }
+}
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#shopId").on('change', function () {
+
+            var valueSelected = this.value;
+
+            //alert(valueSelected);
+
+            var url1 = "http://localhost:63691/Admin/SelectShopor?EntityCode=" + valueSelected;
+
+            $.ajax({
+                url: url1,
+                dataType: "json",
+                type: "GET",
+                contentType: 'application/json; charset=utf-8',
+                async: true,
+                processData: false,
+                cache: false,
+                success: function (data) {
+
+                    //alert('You selected: ' + data.value + ', ' + data.Name);
+                    FillSubCategories(data);
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            });
+
+
+
+        });
+    });
+
+
+    function FillSubCategories(jsonRes) {
+
+        $("#shopId").hide();
+
+
+        var barChartData = {
+            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+            datasets: [
+
+                {
+                    fillColor: "rgba(151,187,205,0.5)",
+                    strokeColor: "rgba(151,187,205,1)",
+                   // data: [jsonRes[0].array, jsonRes[1].array, jsonRes[2].array, jsonRes[3].array, jsonRes[4].array, jsonRes[5].array, jsonRes[6].array, jsonRes[7].array, jsonRes[8].array, jsonRes[9].array, jsonRes[10].array, jsonRes[11].array]  /*Set Data here */
+                
+                    data: [28, 48, 40, 19, 96, 27, 100, 22, 33, 55, 66, 77]
+                }
+            ]
+
+        };
+
+
+        new Chart(document.getElementById("bar").getContext("2d")).Bar(barChartData);
+
+
+    };
+
+
+
+</script>
+
+
+
+
+
+    <!--main content start-->
+    <section id="main-content">
+        <section class="wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="page-header"><i class="fa fa-table"></i> Generate Order Report</h3>
+
+                </div>
+            </div>
+            <!-- page start-->
+
+            <div class="panel-body">
+                <div class="form">
+
+                    <div class="form-group">
+
+
+                        <label @*asp-for="shopcode" *@ class="control-label col-lg-2"><b> Select Shop</b></label><span style="color:red"></span>
+                        <div class="col-lg-10">
+                            <select name="EntityCode" id="shopId" class="form-control m-bot15">
+                                <option value=0> Select Option</option>
+                                @if (ViewData["Allshops"] != null)
+                                {
+
+                                    @foreach (var cat in (IEnumerable<BusinessEntity>)ViewData["Allshops"])
+                                    {
+
+                                        <option value="@cat.EntityCode"> @cat.EntityAddress</option>
+
+                                    }
+                                }
+
+                            </select>
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="tab-pane" id="chartjs">
+                        <div class="row">
+                            <!-- Line -->
+                            <!-- Bar -->
+                            <div class="col-lg-12">
+                                <section class="panel">
+                                    <header class="panel-heading">
+                                        Bar
+                                    </header>
+                                    <div class="panel-body text-center">
+                                        <canvas id="bar" height="300" width="1000"></canvas>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+            <!-- page end-->
+        </section>
+
+    </section>
+    <!--main content end-->

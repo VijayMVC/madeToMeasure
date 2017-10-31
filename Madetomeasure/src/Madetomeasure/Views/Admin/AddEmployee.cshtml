@@ -1,0 +1,151 @@
+﻿@model Madetomeasure.Models.Admin.NewEmployee
+@{
+    ViewBag.Title = "Add Employee";
+    @if (TempData["alreadypresent"] != null)
+    {
+        @if ((string)TempData["alreadypresent"] == "true")
+        {
+            TempData["alreadypresent"] = "";
+            <script>
+                alert('UserId Already Present');
+            
+            </script>
+
+
+        }
+
+
+    }
+    @if (TempData["dateinvalid"] != null)
+    {
+    @if ((string)TempData["dateinvalid"] == "true")
+    {
+        TempData["dateinvalid"] = "";
+        <script>
+                alert('Joining Date should be any future instance');
+
+           </script>
+
+
+    }
+    }
+}
+@{
+
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+    <!--sidebar end-->
+    <section id="main-content">
+        <section class="wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="page-header"><i class="fa fa-files-o"></i> Add Employee</h3>
+                   
+                </div>
+            </div>
+            <!-- Form validations -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Add New Employee
+                        </header>
+                        <div class="panel-body">
+                            <div class="form">
+                              
+                                <form class="form-validate form-horizontal" id="feedback_form" method="get" asp-controller="Admin" asp-action="AddNewEmployee">
+
+                                    <div class="form-group ">
+                                        <label asp-for="Name" class="control-label col-lg-2">Full Name<span style="color:red">*</span></label>
+                                        <div class="col-lg-10">
+                                            <input type="text" multiple asp-for="Name" class="form-control" />
+                                            <span asp-validation-for="Name" class="text-danger" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label asp-for="UserId" class="control-label col-lg-2">User Id<span style="color:red">*</span></label>
+                                        <div class="col-lg-10">
+                                            <input type="text" multiple asp-for="UserId" class="form-control" />
+                                            <span asp-validation-for="UserId" class="text-danger" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label asp-for="Password" class="control-label col-lg-2">Password<span style="color:red">*</span></label>
+                                        <div class="col-lg-10">
+                                            <input type="password" multiple asp-for="Password" class="form-control" />
+                                            <span asp-validation-for="Password" class="text-danger" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label asp-for="CPassword" class="control-label col-lg-2">Confirm Password<span style="color:red">*</span></label>
+                                        <div class="col-lg-10">
+                                            <input type="password" multiple asp-for="CPassword" class="form-control" />
+                                            <span asp-validation-for="CPassword" class="text-danger" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label asp-for="JoiningDate" class="control-label col-lg-2">Joining Date<span style="color:red">*</span></label>
+                                        <div class="col-lg-10">
+
+                                            @{var date = DateTime.Now.Year.ToString() + "-" + DateTime.Now.Month.ToString() + "-" + DateTime.Now.Day.ToString(); }
+
+                                            <input type="date" value=@date asp-for="JoiningDate" class="form-control" />
+                                            <span asp-validation-for="JoiningDate" class="text-danger" />
+                                        </div>
+                                    </div>        
+                                            <div class="form-group">
+
+                                                <label asp-for="designation" class="control-label col-lg-2">Designation<span style="color:red">*</span></label>
+                                                <div class="col-lg-10">
+                                                    <select asp-for="designation" id="designation" class="form-control text">
+
+                                                       
+
+                                                        <option value="shopkeeper" class="text">Shopkeeper</option>
+                                                        <option value="warehousemanager" class="text">WareHouse Manager</option>
+                                           
+                                                        <option value="stunithead" class="text">StitchingUnit Department head</option>
+
+                                                    </select>
+
+                                                    <span asp-validation-for="designation" id="designationcheck" class="text-danger"></span>
+                                                </div>
+                                                </div>
+
+                                   
+
+                                            
+                                       
+
+
+
+                                        <div class="form-group">
+                                            <div class="col-lg-offset-2 col-lg-10">
+                                                <br />
+                                                <br />
+                                                <button class="btn btn-primary" type="submit">Add</button>
+                                                <button class="btn btn-default" type="button" onclick="location.href='@Url.Action("Index","Admin")'">Cancel</button>
+                                            </div>
+                                        </div>
+                                </form>
+                            <br />
+                            <br />
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="row">
+
+            </div>
+            <!-- page end-->
+        </section>
+    </section>
+    <!--main content start-->
+@section Scripts {
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

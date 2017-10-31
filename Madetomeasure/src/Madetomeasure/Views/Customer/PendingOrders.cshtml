@@ -1,0 +1,139 @@
+﻿@using Madetomeasure.Data
+@model IList<Madetomeasure.Models.StUnitAndCustomer.HistoryItem>
+@using Madetomeasure.Models.StUnitAndCustomer
+
+
+@{ 
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+    ViewBag.Title = "Pending Orders";
+}
+
+<section id="main-content">
+    <section class="wrapper">
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header"><i class="fa fa-files-o"></i> Pending Orders  زیرالتوا آرڈر</h3>
+    </div>
+</div>
+        <!-- Form validations -->
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="panel">
+                    @if (Model.Count > 0)
+                    {
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Order Name   آرڈر کا نام</th>
+                                    <th>Order Date   آرڈر کی تاریخ</th>
+                                    <th>Status       مرحلہ</th>
+                                    <th>Expected Date متوقع تاریخ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @{
+                                    int serialnumber = 1;
+                                }
+                                @foreach (HistoryItem historyitem in Model)
+                                {
+                                    <tr style="cursor:pointer" onclick="location.href='@Url.Action("OrderDetails", "Customer",new { stitchingjobid = historyitem.sj.JobId })'">
+                                        <td>@serialnumber</td>
+
+                                        @{
+                                            serialnumber++;
+                                            string jobname = null;
+                                        }
+                                        @if (historyitem.sj.JobType.JobName == "Kurta")
+                                        {
+                                            jobname = "Kurta کرتا";
+                                        }
+                                        else if (historyitem.sj.JobType.JobName == "Shalwar")
+                                        {
+                                            jobname = "Shalwar شلوار ";
+                                        }
+                                        else if (historyitem.sj.JobType.JobName == "Blazer")
+                                        {
+                                            jobname = "Blazer بلیزر";
+                                        }
+                                        else if (historyitem.sj.JobType.JobName == "Suit")
+                                        {
+                                            jobname = "Suit سوٹ";
+                                        }
+                                        else if (historyitem.sj.JobType.JobName == "Shirt")
+                                        {
+                                            jobname = "Shirt شرٹ";
+                                        }
+                                        else if (historyitem.sj.JobType.JobName == "KameezShalwar")
+                                        {
+                                            jobname = "KameezShalwar قمیض  شلوار";
+                                        }
+                                        else if (historyitem.sj.JobType.JobName == "Pant")
+                                        {
+                                            jobname = "Pant پینٹ";
+                                        }
+
+                                        <td>@jobname </td>
+
+                                        <td>@Html.Encode(historyitem.invoice.Date.ToString("dd/MM/yyyy"))</td>
+
+                                        @{
+                                            string statusname = "";
+                                        }
+                                        @if (historyitem.sj.WarehouseStatus == 1)
+                                        {
+
+
+                                            int status = -1;
+                                            foreach (ProductionActivity pa in historyitem.sj.ProductionActivity)
+                                            {
+                                                if (status < pa.ProgressStatus)
+                                                {
+                                                    status = pa.ProgressStatus;
+                                                }
+
+                                            }
+
+                                            switch (status)
+                                            {
+                                                case 1: statusname = "Cutting کٹنگ"; break;
+                                                case 2: statusname = "Embroidary کڑھائی"; break;
+                                                case 3: statusname = "Stitching سلائی"; break;
+                                                case 4: statusname = "Quality Assurance کوالٹی اشورینس"; break;
+                                                case 5: statusname = "Packing پیکنگ"; break;
+                                                case 6: statusname = "Finished تیار"; break;
+                                                default:
+                                                    break;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            statusname = "Warehouse Processing ویئرہاؤس پراسیسنگ";
+
+                                        }
+                                        <td>@statusname</td>
+                                        <td>@Html.Encode(historyitem.sj.ExpectedDate.Value.ToString("dd/MM/yyyy"))</td>
+                                    </tr>
+                                            }
+                            </tbody>
+                        </table>
+                        }
+                        else
+                        {
+                            <div class="alert alert-block alert-danger fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="icon-remove"></i>
+                                </button>
+                                <span style="font-size:large">There is no pending order  کوئی زیرالتوا آرڈر موجود نہیں ہے </span>
+                            </div>
+                        }
+                </section>
+            </div>
+        </div>
+        <div class="row">
+                 
+        </div>
+        <!-- page end-->
+    </section>
+</section>

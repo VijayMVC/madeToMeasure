@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Stitching Jobs";
+    Layout = "~/Views/Shared/_WarehouseLayout.cshtml";
+
+}
+
+
+<section id="container" class="sidebar-close">
+   
+    <!--main content start-->
+    <section id="main-content">
+        <section class="wrapper">
+          
+
+                <div class="row">
+
+                    <div class="col-sm-8">
+
+                        @{
+                            if (ViewBag.MessageType == "success")
+                            {
+
+                    <div class="alert alert-success fade in" style="font-size:x-large">
+
+                        <strong>@ViewBag.Message</strong>
+                    </div>
+
+                            }
+                            else
+                            {
+                    <div class="alert alert-block alert-danger fade in" style="font-size:x-large">
+
+                        <strong>@ViewBag.Message</strong>
+                    </div>
+
+
+                            }
+
+                        }
+
+
+
+
+                    </div>
+
+
+                </div>
+</section>
+    </section>
+    <!--main content end-->
+</section>

@@ -1,0 +1,94 @@
+﻿@model List<Madetomeasure.Data.Item>
+
+@{
+    ViewBag.Title = "Warehouse Status";
+    Layout = "~/Views/Shared/_WarehouseLayout.cshtml";
+
+}
+
+<section id="main-content">
+    <section class="wrapper">
+       
+        <!-- Form validations -->
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="panel">
+                   
+                  
+                    @if (ViewBag.itemsreturned == "yes")
+                    {
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <section class="panel">
+                                    <header class="panel-heading">
+                                        Item Status
+                                    </header>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+
+                                                    <th>#</th>
+                                                    <th>Item category</th>
+                                                    <th>Item sub category</th>
+                                                    <th>Brand</th>
+                                                    <th>Quantity</th>
+                                                    <th>Color</th>
+                                                    <th>Unit Price</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    int count = 1;
+                                                }
+                                                @foreach (var x in Model)
+                                                {
+
+                                                    <tr>
+                                                        <td>@count</td>
+                                                        <td>@Html.Encode(@x.Category.CategoryName)</td>
+                                                        <td>@Html.Encode(@x.SubCategory.SubCategoryName)</td>
+                                                        <td>@Html.Encode(@x.BrandName)</td>
+                                                        <td>@Html.Encode(@x.Quantity)</td>
+                                                        <td>@Html.Encode(@x.Color)</td>
+                                                        <td>@Html.Encode(@x.UnitCostPrice)</td>
+
+                                                    </tr>
+                                                    count++;
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                                                    }
+
+
+
+                </section>
+            </div>
+        </div>
+     
+
+
+
+
+
+
+
+        <!-- page end-->
+    </section>
+
+
+</section>
+
+<!-- container section end -->
+
+
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

@@ -1,0 +1,270 @@
+﻿@model Madetomeasure.Models.StUnitAndCustomer.HistoryItem
+@using Madetomeasure.Data
+
+@{ 
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+    ViewBag.Title = "Order Details";
+}
+
+<section id="main-content">
+    <section class="wrapper">
+<div class="row">
+<div class="col-lg-12">
+    <h3 class="page-header"><i class="fa fa-files-o"></i> Order Details آرڈر کی تفصیلات</h3>
+</div>
+</div>
+        <!-- Form validations -->              
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="panel">
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th>Order Name آرڈر کا نام</th>
+                            @{
+                                string jobname = null;
+                            }
+                            @if (Model.sj.JobType.JobName == "Kurta")
+                            {
+                                jobname = "Kurta کرتا";
+                            }
+                            else if (Model.sj.JobType.JobName == "Shalwar")
+                            {
+                                jobname = "Shalwar شلوار ";
+                            }
+                            else if (Model.sj.JobType.JobName == "Blazer")
+                            {
+                                jobname = "Blazer بلیزر";
+                            }
+                            else if (Model.sj.JobType.JobName == "Suit")
+                            {
+                                jobname = "Suit سوٹ";
+                            }
+                            else if (Model.sj.JobType.JobName == "Shirt")
+                            {
+                                jobname = "Shirt شرٹ";
+                            }
+                            else if (Model.sj.JobType.JobName == "KameezShalwar")
+                            {
+                                jobname = "KameezShalwar قمیض  شلوار";
+                            }
+                            else if (Model.sj.JobType.JobName == "Pant")
+                            {
+                                jobname = "Pant پینٹ";
+                            }
+
+                            <td>@jobname </td>
+                        </tr>
+                        <tr>
+                            <th>Invoice Number انوائس نمبر</th>
+                            <td>@Html.Encode(Model.invoice.InvoiceId)</td>
+                        </tr>
+                            <tr>
+                                <th>Status مرحلہ</th>
+                                @{
+                                    string statusname = "";
+                                }
+                                @if (Model.sj.WarehouseStatus == 1)
+                                {
+
+
+                                    int status = -1;
+                                    foreach (ProductionActivity pa in Model.sj.ProductionActivity)
+                                    {
+                                        if (status < pa.ProgressStatus)
+                                        {
+                                            status = pa.ProgressStatus;
+                                        }
+
+                                    }
+
+                                    switch (status)
+                                    {
+                                        case 1: statusname = "Cutting کٹنگ"; break;
+                                        case 2: statusname = "Embroidary کڑھائی"; break;
+                                        case 3: statusname = "Stitching سلائی"; break;
+                                        case 4: statusname = "Quality Assurance کوالٹی اشورینس"; break;
+                                        case 5: statusname = "Packing پیکنگ"; break;
+                                        case 6: statusname = "Finished تیار"; break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                                else
+                                {
+                                    statusname = "Warehouse Processing ویئرہاؤس پراسیسنگ";
+
+                                }
+                                <td>@statusname</td>
+                            </tr>
+                        <tr>
+                            <th>Order Date آرڈر کی تاریخ</th>
+                            <td>@Html.Encode(@Model.invoice.Date.ToString("dd/MM/yyyy"))</td>
+                        </tr>
+                        <tr>
+                            <th>Expected Date متوقع تاریخ</th>
+                            <td>@Html.Encode(@Model.sj.ExpectedDate.Value.ToString("dd/MM/yyyy"))</td>
+                        </tr>
+                        <tr>
+                            <th>Shop Address دکان ایڈریس</th>
+                            <td>@Html.Encode(@Model.sj.ShopCodeNavigation.EntityAddress)</td>
+                        </tr>
+                        <tr>
+                            <th>Measurements ناپ</th>
+                            <td>
+                                @if (Model.sj.JobType.JobName == "Kurta")
+                                {
+                                    //Kurta
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Length</th>
+                                                <th>Chest</th>
+                                                <th>Shoulder</th>
+                                                <th>Sleeve</th>
+                                                <th>Collar</th>
+                                                <th>Daman</th>
+                                                <th>Other Details</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>@Html.Encode(Model.sj.KurtaMeasurements.Length)</td>
+                                                <td>@Html.Encode(Model.sj.KurtaMeasurements.Chest)</td>
+                                                <td>@Html.Encode(Model.sj.KurtaMeasurements.Shoulder)</td>
+                                                <td>@Html.Encode(Model.sj.KurtaMeasurements.Sleeve)</td>
+                                                <td>@Html.Encode(Model.sj.KurtaMeasurements.Collar)</td>
+                                                <td>@Html.Encode(Model.sj.KurtaMeasurements.Daman)</td>
+                                                <td>@Html.Encode(Model.sj.KurtaMeasurements.OtherDetails)</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                } else if (Model.sj.JobType.JobName == "Blazer")
+                                {
+                                        //Blazer
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Length</th>
+                                                <th>Chest</th>
+                                                <th>Shoulder</th>
+                                                <th>Sleeve</th>
+                                                <th>Bicep</th>
+                                                <th>Wrist</th>
+                                                <th>Other Details</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>@Html.Encode(Model.sj.BlazerMeasurements.Length)</td>
+                                                <td>@Html.Encode(Model.sj.BlazerMeasurements.Chest)</td>
+                                                <td>@Html.Encode(Model.sj.BlazerMeasurements.Shoulder)</td>
+                                                <td>@Html.Encode(Model.sj.BlazerMeasurements.Sleeve)</td>
+                                                <td>@Html.Encode(Model.sj.BlazerMeasurements.Bicep)</td>
+                                                <td>@Html.Encode(Model.sj.BlazerMeasurements.Wrist)</td>
+                                                <td>@Html.Encode(Model.sj.BlazerMeasurements.OtherDetails)</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                }
+                                else if (Model.sj.JobType.JobName == "Pant")
+                                {
+                                        //Pant Measurements
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Waist</th>
+                                                <th>Hip</th>
+                                                <th>Thigh</th>
+                                                <th>OutSeam</th>
+                                                <th>Inseam</th>
+                                                <th>Crotch</th>
+                                                <th>Knee</th>
+                                                <th>Other Details</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>@Html.Encode(Model.sj.PantMeasurements.Waist)</td>
+                                                <td>@Html.Encode(Model.sj.PantMeasurements.Hip)</td>
+                                                <td>@Html.Encode(Model.sj.PantMeasurements.Thigh)</td>
+                                                <td>@Html.Encode(Model.sj.PantMeasurements.OutSeam)</td>
+                                                <td>@Html.Encode(Model.sj.PantMeasurements.Inseam)</td>
+                                                <td>@Html.Encode(Model.sj.PantMeasurements.Crotch)</td>
+                                                <td>@Html.Encode(Model.sj.PantMeasurements.Knee)</td>
+                                                <td>@Html.Encode(Model.sj.PantMeasurements.OtherDetails)</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                }
+                                else if (Model.sj.JobType.JobName == "Shalwar")
+                                {
+                                        //Shalwar
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Length</th>
+                                                <th>Waist</th>
+                                                <th>Bottom</th>
+                                                <th>Other Details</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>@Html.Encode(Model.sj.ShalwarMeasurements.Length)</td>
+                                                <td>@Html.Encode(Model.sj.ShalwarMeasurements.Waist)</td>
+                                                <td>@Html.Encode(Model.sj.ShalwarMeasurements.Bottom)</td>
+                                                <td>@Html.Encode(Model.sj.ShalwarMeasurements.OtherDetails)</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                }
+                                else if (Model.sj.JobType.JobName == "Shirt")
+                                {
+                                        //Shirt
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Length</th>
+                                                <th>Chest</th>
+                                                <th>Shoulder</th>
+                                                <th>Sleeve</th>
+                                                <th>Collar</th>
+                                                <th>HalfBack</th>
+                                                <th>FullBack</th>
+                                                <th>Bicep</th>
+                                                <th>Wrist</th>
+                                                <th>Waist</th>
+                                                <th>Other Details</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>@Html.Encode(Model.sj.ShirtMeasurements.Length)</td>
+                                                <td>@Html.Encode(Model.sj.ShirtMeasurements.Chest)</td>
+                                                <td>@Html.Encode(Model.sj.ShirtMeasurements.Shoulder)</td>
+                                                <td>@Html.Encode(Model.sj.ShirtMeasurements.Sleeve)</td>
+                                                <td>@Html.Encode(Model.sj.ShirtMeasurements.Collar)</td>
+                                                <td>@Html.Encode(Model.sj.ShirtMeasurements.HalfBack)</td>
+                                                <td>@Html.Encode(Model.sj.ShirtMeasurements.FullBack)</td>
+                                                <td>@Html.Encode(Model.sj.ShirtMeasurements.Bicep)</td>
+                                                <td>@Html.Encode(Model.sj.ShirtMeasurements.Wrist)</td>
+                                                <td>@Html.Encode(Model.sj.ShirtMeasurements.Waist)</td>
+                                                <td>@Html.Encode(Model.sj.ShirtMeasurements.OtherDetails)</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                }
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </div>
+        <div class="row">
+                 
+        </div>
+        <!-- page end-->
+    </section>
+</section>

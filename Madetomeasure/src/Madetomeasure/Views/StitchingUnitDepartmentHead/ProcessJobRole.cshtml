@@ -1,0 +1,140 @@
+﻿@model List<Madetomeasure.Data.StitchingUnitEmployee>
+@using Madetomeasure.Data
+
+@{
+    Layout = "~/Views/Shared/_LayoutStitchingUnitDepartmentHead.cshtml";
+    ViewBag.Title = "Process Job Role";
+}
+
+
+<!--main content start-->
+
+
+<section id="main-content">
+    <section class="wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header"><i class="fa fa-files-o"></i>Process Job Role</h3>
+            </div>
+        </div>
+        
+            <form method="post" asp-controller="StitchingUnitDepartmentHead" asp-action="saveJob" role="form" enctype="multipart/form-data" class="form-validate form-horizontal" id="feedback_form" autocomplete="on">
+                
+                <div class="row">
+                    <div class="col-lg-12">
+                        <section class="panel">
+                            <label style="font-size:large">Employee</label>
+                            <select  class="form-control input-lg m-bot15" name="EmployeeId">
+                                @foreach (StitchingUnitEmployee employee in Model)
+                                {
+                                    <option value="@employee.Id"> @Html.Encode(employee.Name)</option>
+                                }
+                            </select>
+
+                            <label style="font-size:large">Click in Text box before Scanning</label>
+                            <input name="stitchingjobid" class="form-control" />
+                        </section>
+
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-sm-8">
+
+                        @{
+                            if (TempData["stitchingjobsave"] != null && TempData["stitchingjobsave"].ToString() == "success")
+                            {
+
+                                <div class="alert alert-success fade in" style="font-size:medium">
+
+                                    <strong>Added successfully!</strong>
+                                </div>
+
+                            }
+
+                        }
+
+
+
+
+                    </div>
+
+
+                </div>
+
+
+
+<div class="row">
+
+
+                    <div class="col-sm-8">
+
+                        @{
+                            if (TempData["stitchingjobsave"] != null && (bool)TempData["stitchingjobsave"])
+                            {
+
+                                <div class="alert alert-success fade in" style="font-size:medium">
+
+                                    <strong>Added successfully!</strong>
+                                </div>
+
+                                TempData["stitchingjobsave"] = false;
+                            }
+
+
+
+                        }
+
+
+
+
+                    </div>
+
+
+                </div>
+
+                
+
+                <div class="row">
+
+                    <div class="col-sm-8">
+
+                        @{
+                            if (TempData["alreadyadded"] != null && (bool)TempData["alreadyadded"])
+                            {
+
+                                <div class="alert alert-success fade in" style="font-size:medium">
+
+                                    <strong>Already added!</strong>
+                                </div>
+
+                                TempData["alreadyadded"] = false;
+                            }
+
+
+
+                        }
+
+
+
+
+                    </div>
+
+
+                </div>
+
+
+            
+
+            </form>
+
+        <div class="row">
+
+        </div>
+        <!-- page end-->
+    </section>
+</section>
+<!--main content start-->

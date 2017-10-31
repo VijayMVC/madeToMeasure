@@ -1,0 +1,1135 @@
+﻿@model Madetomeasure.ViewModels.Shop.AddStitchingJobViewModel
+
+@{
+    Layout = "~/Views/Shared/_ShopLayout.cshtml";
+}
+
+<script>
+
+    $(document).ready(function () {
+
+
+
+        $("#c_id").keyup(function () {
+
+            var url1 = "http://localhost:63691/Shop/GetCustomerId?id=" + $("#c_id").val();
+
+            $.ajax({
+                url: url1,
+                dataType: "json",
+                type: "GET",
+                contentType: 'application/json; charset=utf-8',
+                async: true,
+                processData: false,
+                cache: false,
+                success: function (data) {
+
+                    //alert('You selected: ' + data.value + ', ' + data.Name);
+                    FillTable(data);
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            });
+
+
+
+        });
+    });
+
+    //$(function () {
+    //    alert('1');
+    //    $('myform').validate().settings.ignore = 'div:hidden *';
+    //});
+
+    //$(function () {
+    //    alert('1');
+    //    $('myform').validate().settings.ignore = ':hidden';
+    //});
+
+
+    //$("myform").submit(function () {
+    //    alert('Submitted');
+    //    $('myform').validate().settings.ignore = 'div:hidden *';
+
+    //});
+
+$(document).ready(function(){
+     $("#shirt").hide();
+     $("#suit").hide();
+     $("#shalwar").hide();
+     $("#kurta").hide();
+     $("#blazer").hide();
+     $("#pant").hide();
+        $('#marksuit').hide();
+        $('#markshirt').hide();
+        $('#markpant').hide();
+        $('#markshalwar').hide();
+        $('#markblazer').hide();
+        $('#markkurta').hide();
+        $('#jobtype').on('change', function () {
+      if ( this.value == '1')
+      //.....................^.......
+      {
+          if ($('#checkstatus option:selected').val() == '0')
+        {
+            $('#marksuit').show();
+            $('#markshirt').hide();
+            $('#markpant').hide();
+            $('#markshalwar').hide();
+            $('#markblazer').hide();
+            $('#markkurta').hide();
+        }
+        else
+        {
+            $('#marksuit').hide();
+        }
+
+        $("#suit").show();
+        $("#shirt").hide();
+
+        $("#shalwar").hide();
+        $("#kurta").hide();
+        $("#blazer").hide();
+        $("#pant").hide();
+
+        $('#markshirt').hide();
+        $('#markpant').hide();
+        $('#markshalwar').hide();
+        $('#markblazer').hide();
+        $('#markkurta').hide();
+         $('#markshirt').hide();
+      }
+      else if (this.value == '2')
+          //.....................^.......
+      {
+          if ($('#checkstatus option:selected').val() == '0') {
+              $('#marksuit').hide();
+              $('#markshirt').hide();
+              $('#markpant').show();
+              $('#markshalwar').hide();
+              $('#markblazer').hide();
+              $('#markkurta').hide();
+          }
+          else {
+              $('#markpant').hide();
+          }
+
+          $("#suit").hide();
+          $("#shirt").hide();
+
+          $("#shalwar").hide();
+          $("#kurta").hide();
+          $("#blazer").hide();
+          $("#pant").show();
+
+          $('#markshirt').hide();
+
+          $('#markshalwar').hide();
+          $('#markblazer').hide();
+          $('#markkurta').hide();
+          $('#markshirt').hide();
+      }
+
+
+      else if (this.value == '3')
+          //.....................^.......
+      {
+          if ($('#checkstatus option:selected').val() == '0') {
+              $('#marksuit').hide();
+              $('#markshirt').show();
+              $('#markpant').hide();
+              $('#markshalwar').hide();
+              $('#markblazer').hide();
+              $('#markkurta').hide();
+          }
+          else {
+              $('#markshirt').hide();
+          }
+
+          $("#suit").hide();
+          $("#shirt").show();
+
+          $("#shalwar").hide();
+          $("#kurta").hide();
+          $("#blazer").hide();
+          $("#pant").hide();
+
+
+          $('#markpant').hide();
+          $('#markshalwar').hide();
+          $('#markblazer').hide();
+          $('#markkurta').hide();
+
+      }
+
+      else if (this.value == '4')
+          //.....................^.......
+      {
+          if ($('#checkstatus option:selected').val() == '0') {
+              $('#marksuit').hide();
+              $('#markshirt').hide();
+              $('#markpant').hide();
+              $('#markshalwar').hide();
+              $('#markblazer').show();
+              $('#markkurta').hide();
+          }
+          else {
+              $('#markblazer').hide();
+          }
+
+          $("#suit").hide();
+          $("#shirt").hide();
+
+          $("#shalwar").hide();
+          $("#kurta").hide();
+          $("#blazer").show();
+          $("#pant").hide();
+
+          $('#markshirt').hide();
+          $('#markpant').hide();
+          $('#markshalwar').hide();
+
+          $('#markkurta').hide();
+          $('#markshirt').hide();
+      }
+
+
+      else if (this.value == '5')
+          //.....................^.......
+      {
+          if ($('#checkstatus option:selected').val() == '0') {
+              $('#marksuit').hide();
+              $('#markshirt').hide();
+              $('#markpant').hide();
+              $('#markshalwar').show();
+              $('#markblazer').hide();
+              $('#markkurta').hide();
+          }
+          else {
+              $('#markshalwar').hide();
+          }
+
+          $("#suit").hide();
+          $("#shirt").hide();
+
+          $("#shalwar").show();
+          $("#kurta").hide();
+          $("#blazer").hide();
+          $("#pant").hide();
+
+          $('#markshirt').hide();
+          $('#markpant').hide();
+
+          $('#markblazer').hide();
+          $('#markkurta').hide();
+          $('#markshirt').hide();
+      }
+
+      else if (this.value == '6')
+          //.....................^.......
+      {
+          if ($('#checkstatus option:selected').val() == '0') {
+              $('#marksuit').hide();
+              $('#markshirt').hide();
+              $('#markpant').hide();
+              $('#markshalwar').hide();
+              $('#markblazer').hide();
+              $('#markkurta').show();
+          }
+          else {
+              $('#markkurta').hide();
+          }
+
+          $("#suit").hide();
+          $("#shirt").hide();
+
+          $("#shalwar").hide();
+          $("#kurta").show();
+          $("#blazer").hide();
+          $("#pant").hide();
+
+          $('#markshirt').hide();
+          $('#markpant').hide();
+          $('#markshalwar').hide();
+          $('#markblazer').hide();
+
+          $('#markshirt').hide();
+      }
+
+       else if (this.value == '0')
+      {
+           $("#shirt").hide();
+           $("#suit").hide();
+           $("#shalwar").hide();
+           $("#kurta").hide();
+           $("#blazer").hide();
+           $("#pant").hide();
+           $('#marksuit').hide();
+           $('#markshirt').hide();
+           $('#markpant').hide();
+           $('#markshalwar').hide();
+           $('#markblazer').hide();
+           $('#markkurta').hide();
+      }
+      else
+      {
+           $("#shirt").hide();
+           $("#suit").hide();
+           $("#shalwar").hide();
+           $("#kurta").hide();
+           $("#blazer").hide();
+           $("#pant").hide();
+           $('#marksuit').hide();
+           $('#markshirt').hide();
+           $('#markpant').hide();
+           $('#markshalwar').hide();
+           $('#markblazer').hide();
+           $('#markkurta').hide();
+      }
+    });
+});
+
+
+function FillTable(jsonRes)
+{
+    //alert('success' + jsonRes[0]);
+
+    //var html = "<label>" + jsonRes[0].userId + "hello" + "</label>";
+    //html += "<label>" + jsonRes[1].userId + "hello" + "</label>";
+    //document.getElementById("c_temp").innerHTML = html;
+    var dataList = document.getElementById('customers');
+    while (dataList.firstChild) {
+        dataList.removeChild(dataList.firstChild);
+    }
+    var input = document.getElementById('c_id');
+    for (i = 0; i < jsonRes.length; i++) {
+
+        var option = document.createElement('option');
+        // Set the value using the item in the JSON array.
+        option.value = jsonRes[i].userId;
+        // Add the <option> element to the <datalist>.
+        dataList.appendChild(option);
+    }
+
+}
+
+</script>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header"><i class="fa fa fa-bars"></i> Add Stitching Job</h3>
+        @if (ViewBag.successful == "yes")
+        {
+            <span> Order added successfully</span>
+
+        }
+
+
+    </div>
+</div>
+<!-- page start-->
+<form asp-action="AddStitchingJob" id="myform" class="form-horizontal" role="form">
+    <section class="panel">
+        <header class="panel-heading">
+            Fabric from Customer
+        </header>
+
+
+        <div class="panel-body">
+
+            <label asp-for="FabricfromCustomer" class="col-md-2 control-label"></label>
+            <div class="col-lg-10">
+
+                <select asp-for="FabricfromCustomer" class="form-control" id="checkstatus">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+
+            </div>
+            <div id="c_temp">
+
+            </div>
+        </div>
+    </section>
+    <section class="panel">
+        <header class="panel-heading">
+            Customer Id
+        </header>
+        <div class="panel-body">
+            <label asp-for="CustomerId" class="control-label col-lg-2"></label>
+            <div class="col-lg-10">
+                <input asp-for="CustomerId" id="c_id" type="text" class="form-control" placeholder="Customer Id" list="customers">
+                <datalist id="customers"></datalist>
+                <span asp-validation-for="CustomerId" class="text-danger"></span>
+                <span class="text-danger">@ViewBag.customernotfound</span>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="panel">
+        <header class="panel-heading">
+            Job Type
+        </header>
+        <div class="panel-body">
+            <label asp-for="JobTypeId" class="control-label col-lg-2"></label>
+            <div class="col-lg-10">
+                <select asp-for="JobTypeId" class="form-control" id="jobtype">
+                    <option value="0">Select Category</option>
+                    <option value="1">Suit</option>
+                    <option value="2">Pant</option>
+                    <option value="3">Shirt</option>
+                    <option value="4">Blazer</option>
+                    <option value="5">Shalwar</option>
+                    <option value="6">Kurta</option>
+
+                </select>
+
+            </div>
+        </div>
+    </section>
+
+
+
+    <section class="panel" id="">
+        <header class="panel-heading">
+            Expected Date
+        </header>
+        <div class="panel-body">
+            <div class="row">
+                <label asp-for="ExpectedDate" class="col-lg-2 control-label">Expected Date</label>
+                <div class="col-xs-3">
+                    <input asp-for="ExpectedDate" type="date" class="form-control" placeholder="Expected Date">
+                    <span asp-validation-for="ExpectedDate" class="text-danger"></span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="panel" id="marksuit">
+        <header class="panel-heading">
+            Items for Suit
+        </header>
+        <div class="panel-body">
+
+            <div class="row">
+                <label asp-for="SuitItemCode1" class="control-label col-lg-2"></label>
+                <div class="col-xs-3">
+                    <input asp-for="SuitItemCode1" type="number" class="form-control" placeholder="Fabric Item Code">
+                    <span class="text-danger">@ViewBag.suititem1</span>
+
+                </div>
+
+
+
+                <label asp-for="SuitQuantity1" class="col-lg-2 control-label"></label>
+                <div class="col-xs-3">
+                    <input asp-for="SuitQuantity1" class="form-control" placeholder="Fabric Quantity">
+                    <span class="text-danger">@ViewBag.suitquantity1</span>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <label asp-for="SuitItemCode2" class="col-lg-2 control-label"></label>
+                <div class="col-xs-3">
+                    <input asp-for="SuitItemCode2" type="number" class="form-control" placeholder="Button Item Code">
+                    <span class="text-danger">@ViewBag.suititem2</span>
+                </div>
+
+
+                <label asp-for="SuitQuantity2" class="col-lg-2 control-label"></label>
+                <div class="col-xs-3">
+                    <input asp-for="SuitQuantity2" class="form-control" placeholder="Button Quantity">
+                    <span class="text-danger">@ViewBag.suitquantity2</span>
+                </div>
+            </div>
+
+            <div class="row">
+                <label asp-for="SuitItemCode3" class="col-lg-2 control-label"></label>
+                <div class="col-xs-3">
+                    <input asp-for="SuitItemCode3" type="number" class="form-control" placeholder="Zip Item Code">
+                    <span class="text-danger">@ViewBag.suititem3</span>
+                </div>
+
+
+                <label asp-for="SuitQuantity3" class="col-lg-2 control-label"></label>
+                <div class="col-xs-3">
+                    <input asp-for="SuitQuantity3" class="form-control" placeholder="Zip Item Quantity">
+                    <span class="text-danger">@ViewBag.suitquantity3</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <section class="panel" id="suit">
+        <header class="panel-heading">
+            Suit Measurements
+        </header>
+        <div class="panel-body">
+            <span class="text-danger">@ViewBag.suitmeasurements</span>
+            <div class="row">
+                <label asp-for="SuitMeasurements.HalfBack" class="control-label col-lg-2"></label>
+                <div class="col-xs-3">
+                    <input asp-for="SuitMeasurements.HalfBack" class="form-control" placeholder="Halfback">
+                </div>
+
+
+
+                <label asp-for="SuitMeasurements.FullBack" class="col-lg-2 control-label">Fullback</label>
+                <div class="col-xs-3">
+                    <input asp-for="SuitMeasurements.FullBack" class="form-control" placeholder="Fullback">
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <label asp-for="SuitMeasurements.Chest" class="col-lg-2 control-label">Chest</label>
+                <div class="col-xs-3">
+                    <input asp-for="SuitMeasurements.Chest" class="form-control" placeholder="Chest">
+                </div>
+
+
+                <label asp-for="SuitMeasurements.Shoulder" class="col-lg-2 control-label">Shoulder</label>
+                <div class="col-xs-3">
+                    <input asp-for="SuitMeasurements.Shoulder" class="form-control" placeholder="Shoulder">
+                </div>
+            </div>
+
+            <div class="row">
+                <label asp-for="SuitMeasurements.Sleeve" class="col-lg-2 control-label">Sleeve</label>
+                <div class="col-xs-3">
+                    <input asp-for="SuitMeasurements.Sleeve" class="form-control" placeholder="Sleeve">
+                </div>
+
+
+                <label asp-for="SuitMeasurements.Collar" class="col-lg-2 control-label">Collar</label>
+                <div class="col-xs-3">
+                    <input asp-for="SuitMeasurements.Collar" class="form-control" placeholder="Collar">
+                </div>
+            </div>
+
+            <div class="row">
+                <label asp-for="SuitMeasurements.Bicep" class="col-lg-2 control-label">Bicep</label>
+                <div class="col-xs-3">
+                    <input asp-for="SuitMeasurements.Bicep" class="form-control" placeholder="Bicep">
+                </div>
+
+
+                <label asp-for="SuitMeasurements.Wrist" class="col-lg-2 control-label">Wrist</label>
+                <div class="col-xs-3">
+                    <input asp-for="SuitMeasurements.Wrist" class="form-control" placeholder="Wrist">
+                </div>
+            </div>
+
+
+            <div class="row">
+                <label asp-for="SuitMeasurements.Waist" class="col-lg-2 control-label">Waist</label>
+                <div class="col-xs-3">
+                    <input asp-for="SuitMeasurements.Waist" class="form-control" placeholder="Waist">
+                </div>
+
+
+                <label asp-for="SuitMeasurements.Hip" class="col-lg-2 control-label">Hip</label>
+                <div class="col-xs-3">
+                    <input asp-for="SuitMeasurements.Hip" class="form-control" placeholder="Hip">
+                </div>
+            </div>
+
+            <div class="row">
+                <label asp-for="SuitMeasurements.Thigh" class="col-lg-2 control-label">Thigh</label>
+                <div class="col-xs-3">
+                    <input asp-for="SuitMeasurements.Thigh" class="form-control" placeholder="Thigh">
+                </div>
+
+
+                <label asp-for="SuitMeasurements.OutSeam" class="col-lg-2 control-label">Outseam</label>
+                <div class="col-xs-3">
+                    <input asp-for="SuitMeasurements.OutSeam" class="form-control" placeholder="Outseam">
+                </div>
+            </div>
+
+            <div class="row">
+                <label asp-for="SuitMeasurements.Inseam" class="col-lg-2 control-label">Inseam</label>
+                <div class="col-xs-3">
+                    <input asp-for="SuitMeasurements.Inseam" class="form-control" placeholder="Inseam">
+                </div>
+
+
+                <label asp-for="SuitMeasurements.Crotch" class="col-lg-2 control-label">Crotch</label>
+                <div class="col-xs-3">
+                    <input asp-for="SuitMeasurements.Crotch" class="form-control" placeholder="Crotch">
+                </div>
+            </div>
+
+            <div class="row">
+                <label asp-for="SuitMeasurements.Knee" class="col-lg-2 control-label">Knee</label>
+                <div class="col-xs-3">
+                    <input asp-for="SuitMeasurements.Knee" class="form-control" placeholder="Knee">
+                </div>
+
+                <label asp-for="SuitMeasurements.Length" class="col-lg-2 control-label">Length</label>
+                <div class="col-xs-3">
+                    <input asp-for="SuitMeasurements.Length" class="form-control" placeholder="Length">
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+
+                <label asp-for="SuitMeasurements.OtherDetails" class="col-lg-2 control-label">Knee</label>
+                <div class="col-xs-3">
+                    <input asp-for="SuitMeasurements.OtherDetails" class="form-control" placeholder="Other Details">
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <section class="panel" id="markshirt">
+        <header class="panel-heading">
+            Items for Shirt
+        </header>
+        <div class="panel-body">
+
+
+            <div class="row">
+                <label asp-for="ShirtItemCode1" class="control-label col-lg-2">Fabric Item Code</label>
+                <div class="col-xs-3">
+                    <input asp-for="ShirtItemCode1" type="number" class="form-control" placeholder="Fabric Item Code">
+                    <span class="text-danger">@ViewBag.shirtitem1</span>
+                </div>
+
+
+
+                <label asp-for="ShirtQuantity1" class="col-lg-2 control-label">Fabric Quantity</label>
+                <div class="col-xs-3">
+                    <input asp-for="ShirtQuantity1" class="form-control" placeholder="Fabric Quantity">
+                    <span class="text-danger">@ViewBag.shirtquantity1</span>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <label asp-for="ShirtItemCode2" class="col-lg-2 control-label">Button Item Code</label>
+                <div class="col-xs-3">
+                    <input asp-for="ShirtItemCode2" type="number" class="form-control" placeholder="Button Item Code">
+                </div>
+
+
+                <label asp-for="ShirtQuantity2" class="col-lg-2 control-label">Button Quantity</label>
+                <div class="col-xs-3">
+                    <input asp-for="ShirtQuantity2" class="form-control" placeholder="Button Quantity">
+                    <span class="text-danger">@ViewBag.shirtquantity2</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+
+
+
+    <section class="panel" id="shirt">
+        <header class="panel-heading">
+            Shirt Measurements
+        </header>
+        <div class="panel-body">
+            <span class="text-danger">@ViewBag.shirtmeasurements</span>
+            <div class="row">
+                <label asp-for="ShirtMeasurements.Chest" class="col-lg-2 control-label">Chest</label>
+                <div class="col-xs-3">
+                    <input asp-for="ShirtMeasurements.Chest" class="form-control" placeholder="Chest">
+                </div>
+
+
+                <label asp-for="ShirtMeasurements.Shoulder" class="col-lg-2 control-label">Shoulder</label>
+                <div class="col-xs-3">
+                    <input asp-for="ShirtMeasurements.Shoulder" class="form-control" placeholder="Shoulder">
+                </div>
+            </div>
+
+            <div class="row">
+                <label asp-for="ShirtMeasurements.Sleeve" class="col-lg-2 control-label">Sleeve</label>
+                <div class="col-xs-3">
+                    <input asp-for="ShirtMeasurements.Sleeve" class="form-control" placeholder="Sleeve">
+                </div>
+
+
+                <label asp-for="ShirtMeasurements.Collar" class="col-lg-2 control-label">Collar</label>
+                <div class="col-xs-3">
+                    <input asp-for="ShirtMeasurements.Collar" class="form-control" placeholder="Collar">
+                </div>
+            </div>
+
+            <div class="row">
+                <label asp-for="ShirtMeasurements.Bicep" class="col-lg-2 control-label">Bicep</label>
+                <div class="col-xs-3">
+                    <input asp-for="ShirtMeasurements.Bicep" class="form-control" placeholder="Bicep">
+                </div>
+
+
+                <label asp-for="ShirtMeasurements.Wrist" class="col-lg-2 control-label">Wrist</label>
+                <div class="col-xs-3">
+                    <input asp-for="ShirtMeasurements.Wrist" class="form-control" placeholder="Wrist">
+                </div>
+            </div>
+
+            <div class="row">
+                <label asp-for="ShirtMeasurements.HalfBack" class="col-lg-2 control-label"></label>
+                <div class="col-xs-3">
+                    <input asp-for="ShirtMeasurements.HalfBack" class="form-control" placeholder="Halfback">
+                </div>
+
+
+                <label asp-for="ShirtMeasurements.FullBack" class="col-lg-2 control-label"></label>
+                <div class="col-xs-3">
+                    <input asp-for="ShirtMeasurements.FullBack" class="form-control" placeholder="Fullback">
+                </div>
+            </div>
+
+            <div class="row">
+                <label asp-for="ShirtMeasurements.Length" class="col-lg-2 control-label"></label>
+                <div class="col-xs-3">
+                    <input asp-for="ShirtMeasurements.Length" class="form-control" placeholder="Length">
+                </div>
+
+
+                <label asp-for="ShirtMeasurements.Waist" class="col-lg-2 control-label"></label>
+                <div class="col-xs-3">
+                    <input asp-for="ShirtMeasurements.Waist" class="form-control" placeholder="Waist">
+                </div>
+            </div>
+
+            <div class="row">
+                <label asp-for="ShirtMeasurements.OtherDetails" class="col-lg-2 control-label"></label>
+                <div class="col-xs-3">
+                    <input asp-for="ShirtMeasurements.OtherDetails" class="form-control" placeholder="Other Details">
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </section>
+
+
+
+    <section class="panel" id="markpant">
+        <header class="panel-heading">
+            Items for pant
+        </header>
+        <div class="panel-body">
+
+            <div class="row">
+                <label asp-for="PantItemCode1" class="control-label col-lg-2">Fabric Item Code</label>
+                <div class="col-xs-3">
+                    <input asp-for="PantItemCode1" type="number" class="form-control" placeholder="Fabric Item Code">
+                    <span class="text-danger">@ViewBag.pantitem1</span>
+
+                </div>
+
+
+
+                <label asp-for="PantQuantity1" class="col-lg-2 control-label">Fabric Quantity</label>
+                <div class="col-xs-3">
+                    <input asp-for="PantQuantity1" class="form-control" placeholder="Fabric Quantity">
+                    <span class="text-danger">@ViewBag.pantquantity1</span>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <label asp-for="PantItemCode2" class="col-lg-2 control-label">Button Item Code</label>
+                <div class="col-xs-3">
+                    <input asp-for="PantItemCode2" type="number" class="form-control" placeholder="Button Item Code">
+                    <span class="text-danger">@ViewBag.pantitem2</span>
+                </div>
+
+
+                <label asp-for="PantQuantity2" class="col-lg-2 control-label">Button Quantity</label>
+                <div class="col-xs-3">
+                    <input asp-for="PantQuantity2" class="form-control" placeholder="Button Quantity">
+                    <span class="text-danger">@ViewBag.pantquantity2</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="panel" id="pant">
+        <header class="panel-heading">
+            Pant Measurements
+        </header>
+        <div class="panel-body">
+            <span class="text-danger">@ViewBag.pantmeasurements</span>
+
+            <div class="row">
+                <label asp-for="PantMeasurements.Waist" class="col-lg-2 control-label">Waist</label>
+                <div class="col-xs-3">
+                    <input asp-for="PantMeasurements.Waist" class="form-control" placeholder="Waist">
+                </div>
+
+
+                <label asp-for="PantMeasurements.Hip" class="col-lg-2 control-label">Hip</label>
+                <div class="col-xs-3">
+                    <input asp-for="PantMeasurements.Hip" class="form-control" placeholder="Hip">
+                </div>
+            </div>
+
+            <div class="row">
+                <label asp-for="PantMeasurements.Thigh" class="col-lg-2 control-label">Thigh</label>
+                <div class="col-xs-3">
+                    <input asp-for="PantMeasurements.Thigh" class="form-control" placeholder="Thigh">
+                </div>
+
+
+                <label asp-for="PantMeasurements.OutSeam" class="col-lg-2 control-label">Outseam</label>
+                <div class="col-xs-3">
+                    <input asp-for="PantMeasurements.OutSeam" class="form-control" placeholder="Outseam">
+                </div>
+            </div>
+
+            <div class="row">
+                <label asp-for="PantMeasurements.Inseam" class="col-lg-2 control-label">Inseam</label>
+                <div class="col-xs-3">
+                    <input asp-for="PantMeasurements.Inseam" class="form-control" placeholder="Inseam">
+                </div>
+
+
+                <label asp-for="PantMeasurements.Crotch" class="col-lg-2 control-label">Crotch</label>
+                <div class="col-xs-3">
+                    <input asp-for="PantMeasurements.Crotch" class="form-control" placeholder="Crotch">
+                </div>
+            </div>
+
+            <div class="row">
+                <label asp-for="PantMeasurements.Knee" class="col-lg-2 control-label">Knee</label>
+                <div class="col-xs-3">
+                    <input asp-for="PantMeasurements.Knee" class="form-control" placeholder="Knee">
+                </div>
+
+                <label asp-for="PantMeasurements.OtherDetails" class="col-lg-2 control-label">Knee</label>
+                <div class="col-xs-3">
+                    <input asp-for="PantMeasurements.OtherDetails" class="form-control" placeholder="Other Details6">
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <section class="panel" id="markkurta">
+        <header class="panel-heading">
+            Items for kurta
+        </header>
+        <div class="panel-body">
+
+
+            <div class="row">
+                <label asp-for="KurtaItemCode1" class="control-label col-lg-2">Fabric Item Code</label>
+                <div class="col-xs-3">
+                    <input asp-for="KurtaItemCode1" type="number" class="form-control" placeholder="Fabric Item Code">
+                    <span class="text-danger">@ViewBag.kurtaitem1</span>
+
+                </div>
+
+
+
+                <label asp-for="KurtaQuantity1" class="col-lg-2 control-label">Fabric Quantity</label>
+                <div class="col-xs-3">
+                    <input asp-for="KurtaQuantity1" class="form-control" placeholder="Fabric Quantity">
+                    <span class="text-danger">@ViewBag.kurtaquantity1</span>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <label asp-for="KurtaItemCode2" class="col-lg-2 control-label">Button Item Code</label>
+                <div class="col-xs-3">
+                    <input asp-for="KurtaItemCode2" type="number" class="form-control" placeholder="Button Item Code">
+                    <span class="text-danger">@ViewBag.kurtaitem2</span>
+                </div>
+
+
+                <label asp-for="KurtaQuantity2" class="col-lg-2 control-label">Button Quantity</label>
+                <div class="col-xs-3">
+                    <input asp-for="KurtaQuantity2" class="form-control" placeholder="Button Quantity">
+                    <span class="text-danger">@ViewBag.kurtaquantity2</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="panel" id="kurta">
+        <header class="panel-heading">
+            Kurta Measurements
+        </header>
+        <div class="panel-body">
+            <span class="text-danger">@ViewBag.kurtameasurements</span>
+            <div class="row">
+                <label asp-for="KurtaMeasurements.Chest" class="col-lg-2 control-label">Chest</label>
+                <div class="col-xs-3">
+                    <input asp-for="KurtaMeasurements.Chest" class="form-control" placeholder="Chest">
+                </div>
+
+
+                <label asp-for="KurtaMeasurements.Collar" class="col-lg-2 control-label">Collar</label>
+                <div class="col-xs-3">
+                    <input asp-for="KurtaMeasurements.Collar" class="form-control" placeholder="Collar">
+                </div>
+            </div>
+
+            <div class="row">
+                <label asp-for="KurtaMeasurements.Daman" class="col-lg-2 control-label">Daman</label>
+                <div class="col-xs-3">
+                    <input asp-for="KurtaMeasurements.Daman" class="form-control" placeholder="Daman">
+                </div>
+
+
+                <label asp-for="KurtaMeasurements.Length" class="col-lg-2 control-label">Length</label>
+                <div class="col-xs-3">
+                    <input asp-for="KurtaMeasurements.Length" class="form-control" placeholder="Length">
+                </div>
+            </div>
+
+            <div class="row">
+                <label asp-for="KurtaMeasurements.Shoulder" class="col-lg-2 control-label">Shoulder</label>
+                <div class="col-xs-3">
+                    <input asp-for="KurtaMeasurements.Shoulder" class="form-control" placeholder="Shoulder">
+                </div>
+
+
+                <label asp-for="KurtaMeasurements.Sleeve" class="col-lg-2 control-label">Sleeve</label>
+                <div class="col-xs-3">
+                    <input asp-for="KurtaMeasurements.Sleeve" class="form-control" placeholder="Sleeve">
+                </div>
+            </div>
+
+            <div class="row">
+
+
+                <label asp-for="KurtaMeasurements.OtherDetails" class="col-lg-2 control-label">Other Deatils</label>
+                <div class="col-xs-3">
+                    <input asp-for="KurtaMeasurements.OtherDetails" class="form-control" placeholder="Other Details6">
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <section class="panel" id="markshalwar">
+        <header class="panel-heading">
+            Items for shalwar
+        </header>
+        <div class="panel-body">
+
+            <div class="row">
+                <label asp-for="ShalwarItemCode1" class="control-label col-lg-2">Fabric Item Code</label>
+                <div class="col-xs-3">
+                    <input asp-for="ShalwarItemCode1" type="number" class="form-control" placeholder="Fabric Item Code">
+                    <span class="text-danger">@ViewBag.shalwaritem1</span>
+
+                </div>
+
+
+
+                <label asp-for="ShalwarQuantity1" class="col-lg-2 control-label">Fabric Quantity</label>
+                <div class="col-xs-3">
+                    <input asp-for="ShalwarQuantity1" class="form-control" placeholder="Fabric Quantity">
+                    <span class="text-danger">@ViewBag.shalwarquantity1</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="panel" id="shalwar">
+        <header class="panel-heading">
+            Shalwar Measurements
+        </header>
+        <div class="panel-body">
+            <span class="text-danger">@ViewBag.shalwarmeasurements</span>
+            <div class="row">
+                <label asp-for="ShalwarMeasurements.Length" class="col-lg-2 control-label">Length</label>
+                <div class="col-xs-3">
+                    <input asp-for="ShalwarMeasurements.Length" class="form-control" placeholder="Length">
+                </div>
+
+
+                <label asp-for="ShalwarMeasurements.Bottom" class="col-lg-2 control-label">Bottom</label>
+                <div class="col-xs-3">
+                    <input asp-for="ShalwarMeasurements.Bottom" class="form-control" placeholder="Bottom">
+                </div>
+            </div>
+
+            <div class="row">
+                <label asp-for="ShalwarMeasurements.Waist" class="col-lg-2 control-label">Daman</label>
+                <div class="col-xs-3">
+                    <input asp-for="ShalwarMeasurements.Waist" class="form-control" placeholder="Waist">
+                </div>
+
+
+                <label asp-for="ShalwarMeasurements.OtherDetails" class="col-lg-2 control-label">Other Deatils</label>
+                <div class="col-xs-3">
+                    <input asp-for="ShalwarMeasurements.OtherDetails" class="form-control" placeholder="Other Details6">
+                </div>
+            </div>
+
+
+
+        </div>
+    </section>
+
+    <section class="panel" id="markblazer">
+        <header class="panel-heading">
+            Items for blazer
+        </header>
+        <div class="panel-body">
+
+            <div class="row">
+                <label asp-for="BlazerItemCode1" class="control-label col-lg-2">Fabric Item Code</label>
+                <div class="col-xs-3">
+                    <input asp-for="BlazerItemCode1" type="number" class="form-control" placeholder="Fabric Item Code">
+                    <span class="text-danger">@ViewBag.blazeritem1</span>
+
+                </div>
+
+
+
+                <label asp-for="BlazerQuantity1" class="col-lg-2 control-label">Fabric Quantity</label>
+                <div class="col-xs-3">
+                    <input asp-for="BlazerQuantity1" class="form-control" placeholder="Fabric Quantity">
+                    <span class="text-danger">@ViewBag.blazerquantity1</span>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <label asp-for="BlazerItemCode2" class="col-lg-2 control-label">Button Item Code</label>
+                <div class="col-xs-3">
+                    <input asp-for="BlazerItemCode2" type="number" class="form-control" placeholder="Button Item Code">
+                    <span class="text-danger">@ViewBag.blazeritem2</span>
+                </div>
+
+
+                <label asp-for="BlazerQuantity2" class="col-lg-2 control-label">Button Quantity</label>
+                <div class="col-xs-3">
+                    <input asp-for="BlazerQuantity2" class="form-control" placeholder="Button Quantity">
+                    <span class="text-danger">@ViewBag.blazerquantity2</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <section class="panel" id="blazer">
+        <header class="panel-heading">
+            Blazer Measurements
+        </header>
+        <div class="panel-body">
+            <span class="text-danger">@ViewBag.blazermeasurements</span>
+            <div class="row">
+                <label asp-for="BlazerMeasurements.Chest" class="col-lg-2 control-label">Chest</label>
+                <div class="col-xs-3">
+                    <input asp-for="BlazerMeasurements.Chest" class="form-control" placeholder="Chest">
+                </div>
+
+
+                <label asp-for="BlazerMeasurements.Shoulder" class="col-lg-2 control-label">Shoulder</label>
+                <div class="col-xs-3">
+                    <input asp-for="BlazerMeasurements.Shoulder" class="form-control" placeholder="Shoulder">
+                </div>
+            </div>
+
+            <div class="row">
+                <label asp-for="BlazerMeasurements.Sleeve" class="col-lg-2 control-label">Sleeve</label>
+                <div class="col-xs-3">
+                    <input asp-for="BlazerMeasurements.Sleeve" class="form-control" placeholder="Sleeve">
+                </div>
+
+                <label asp-for="BlazerMeasurements.Length" class="col-lg-2 control-label"></label>
+                <div class="col-xs-3">
+                    <input asp-for="BlazerMeasurements.Length" class="form-control" placeholder="Length">
+                </div>
+
+            </div>
+
+            <div class="row">
+                <label asp-for="BlazerMeasurements.Bicep" class="col-lg-2 control-label">Bicep</label>
+                <div class="col-xs-3">
+                    <input asp-for="BlazerMeasurements.Bicep" class="form-control" placeholder="Bicep">
+                </div>
+
+
+                <label asp-for="BlazerMeasurements.Wrist" class="col-lg-2 control-label">Wrist</label>
+                <div class="col-xs-3">
+                    <input asp-for="BlazerMeasurements.Wrist" class="form-control" placeholder="Wrist">
+                </div>
+            </div>
+
+
+
+            <div class="row">
+
+
+
+                <label asp-for="BlazerMeasurements.OtherDetails" class="col-lg-2 control-label"></label>
+                <div class="col-xs-3">
+                    <input asp-for="BlazerMeasurements.OtherDetails" class="form-control" placeholder="Other Deatails">
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-9">
+            <button type="submit" id="addjob" class="btn btn-default">Add another job</button>
+
+        </div>
+    </div>
+
+</form>
+@if (ViewBag.successful == "yes")
+{
+    <form asp-action="PrintJobCard" id="myform2" class="form-horizontal" role="form">
+        <button type="submit" class="btn btn-default">Print</button>
+    </form>
+
+    <script>
+        $("#addjob").hide();
+    </script>
+
+
+}
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+
+}
+

@@ -1,0 +1,70 @@
+﻿@model List<Madetomeasure.Data.Item>
+@{
+    Layout = "~/Views/Shared/_ShopLayout.cshtml";
+}
+
+
+
+<div class="row"
+    <div class="col-lg-12">
+        <h3 class="page-header"><i class="fa fa fa-bars"></i> Warehouse Status</h3>
+
+    </div>
+</div>
+
+@if (ViewBag.itemsreturned == "yes")
+{
+    <div class="row">
+       
+            <section class="panel">
+                <header class="panel-heading">
+                    Item Status
+                </header>
+                <div class="table-responsive">
+                   
+                    <table class="table">
+                        <thead>
+                            <tr>
+
+                                <th>#</th>
+                                <th>Item category</th>
+                                <th>Item sub category</th>
+                                <th>Brand</th>
+                                <th>Quantity</th>
+                                <th>Color</th>
+                                <th>Unit Price</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int count = 1;
+                            }
+                            @foreach (var x in Model)
+                            {
+
+                                <tr>
+                                    <td>@x.ItemCode</td>
+                                    <td>@Html.Encode(@x.Category.CategoryName)</td>
+                                    <td>@Html.Encode(@x.SubCategory.SubCategoryName)</td>
+                                    <td>@Html.Encode(@x.BrandName)</td>
+                                    <td>@Html.Encode(@x.Quantity)</td>
+                                    <td>@Html.Encode(@x.Color)</td>
+                                    <td>@Html.Encode(@x.UnitCostPrice)</td>
+
+                                </tr>
+                                count++;
+                            }
+                        </tbody>
+                    </table>
+                     
+                </div>
+            </section>
+    
+    </div>
+                                }
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+<!-- page end-->
